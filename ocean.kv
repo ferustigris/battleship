@@ -1,8 +1,7 @@
 #:kivy 1.0.9
 
 <OceanGame>:    
-    fieldLeft: fieldGridLeft
-    fieldRight: fieldGridRight
+    fields: [fieldGridLeft, fieldGridRight]
     GridLayout:
         id: fieldGridLeft
         pos: 0, 0
@@ -13,4 +12,5 @@
         pos: root.center_x, 0
         size: root.width/2, root.height
         cols: 5
- 
+
+<CellWidget>: 
