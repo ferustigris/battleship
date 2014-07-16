@@ -10,7 +10,7 @@ class Game:
         
         self.players = [player, pc]
  
-        for player in game.players:
+        for player in self.players:
             player.arrange()
  
 
