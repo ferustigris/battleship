@@ -45,4 +45,4 @@ class UnitCellState(AbstractCellState):
     def name(self):
         return "unit"
 
-
+defaultState = EmptyCellState()

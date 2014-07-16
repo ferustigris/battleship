@@ -4,7 +4,7 @@ import units
 
 class Cell:
     def __init__(self):
-        self.__state = units.EmptyCellState()
+        self.__state = units.defaultState
         self.__hidden = False
 
     def hide(self):
@@ -18,7 +18,7 @@ class Cell:
     def setUnit(self, unit):
         self.__state = unit
     
-    def check(self):
+    def pushOn(self):
         self.__state = self.__state.transfer(self)
 
     @property

@@ -20,16 +20,22 @@ class CellWidget(Button):
         self.text = self.cell.state
 
 class OceanGame(Widget):
-    text = StringProperty("Text 1")
+    text = StringProperty("")
 
     def __init__(self, cells, **kwargs):
         super(OceanGame, self).__init__(**kwargs)
         self.cells = cells
+    def onGameStart(self, game):
+        self.text = "Start"
+    def onGamePrepare(self, game):
+        self.text = "Arrange your units"
+
+
 
 class OceanApp(App):
     def build(self):
         gameMainWidget = OceanGame([])
-        game = Game()
+        game = Game(gameMainWidget)
 
         for field, player in zip(gameMainWidget.fields, game.players):
             for cell in player.cells:

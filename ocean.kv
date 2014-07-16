@@ -12,5 +12,9 @@
         pos: root.center_x, 0
         size: root.width/2, root.height
         cols: 5
-
+    Label:
+        text: root.text
+        pos: root.width/2, root.height/2
+        font_size: "150sp" 
+        on_touch_down: root.text = ""
 <CellWidget>: 
