@@ -7,8 +7,7 @@ from kivy.uix.button import Button
 from kivy.uix.widget import Widget
 from kivy.properties import StringProperty
 
-from cell import Cell
-from fields import PlayerField, ComputerField
+from game import Game
 
 class CellWidget(Button):
      def __init__(self, cell, **kwargs):
@@ -28,20 +27,15 @@ class OceanGame(Widget):
 
 class OceanApp(App):
     def build(self):
-        game = OceanGame([])
-        player = PlayerField([Cell() for i in range(25)])
-        pc = ComputerField([Cell() for i in range(25)])
-        
-        players = [player, pc]
-        for player in players:
-            player.arrange()
- 
-        for field, player in zip(game.fields, players):
+        gameMainWidget = OceanGame([])
+        game = Game()
+
+        for field, player in zip(gameMainWidget.fields, game.players):
             for cell in player.cells:
                 btn1 = CellWidget(cell, text=cell.state)
                 btn1.bind(on_press=btn1.onPress)
                 field.add_widget(btn1)
-        return game
+        return gameMainWidget
 
 
 if __name__ == '__main__':
