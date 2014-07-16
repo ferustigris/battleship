@@ -16,4 +16,6 @@ class ComputerField:
 
         rInd = random.randrange(len(self.cells))
         self.cells[rInd].setUnit()
+        rInd = random.randrange(len(self.cells))
+        self.cells[rInd].setUnit()
 

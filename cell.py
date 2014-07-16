@@ -15,16 +15,32 @@ class AbstractCellState(object):
         """ Return state name"""
         pass
     
+class BombedCellState(AbstractCellState):
+    def transfer(self, cell):
+        return self
+
+    @property
+    def name(self):
+        return "X"
 
 class EmptyCellState(AbstractCellState):
-    def __init__(self):
-        pass
     def transfer(self, cell):
-        pass
+        cell.unhide()
+        return self
 
     @property
     def name(self):
         return "empty"
+
+class UnitCellState(AbstractCellState):
+    def transfer(self, cell):
+        cell.unhide()
+        return BombedCellState()
+
+    @property
+    def name(self):
+        return "unit"
+
 
 class Cell:
     def __init__(self):
@@ -40,10 +56,10 @@ class Cell:
         self.__hidden = False
 
     def setUnit(self):
-        self.__state.transfer(self)
+        self.__state = UnitCellState()
     
     def check(self):
-        self.__state.transfer(self)
+        self.__state = self.__state.transfer(self)
 
     @property
     def state(self):
