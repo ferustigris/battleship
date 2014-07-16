@@ -1,40 +1,9 @@
 from cell import Cell
 from fields import PlayerField, ComputerField
-from abc import ABCMeta, abstractmethod
 
 import weakref
-
-class AbstractGameState:
-    @abstractmethod
-    def pushOn(self, game, cell):
-        pass
-
-class WaitPlayGameState(AbstractGameState):
-    def pushOn(self, game, cell):
-       game.state = PlayGameState()
-
-
-class PlayGameState(AbstractGameState):
-    def pushOn(self, game, cell):
-        cell.pushOn()
-
-class InitGameState(AbstractGameState):
-    def pushOn(self, game, cell):
-       game.state = WaitPrepareGameState()
-       game.observer.onGamePrepare(game) 
-
-class WaitPrepareGameState(AbstractGameState):
-    def pushOn(self, game, cell):
-       game.state = PrepareGameState()
-
-class PrepareGameState(AbstractGameState):
-    def pushOn(self, game, cell):
-        if cell in game.player.cells:
-            cell.setUnit(game.player.freeUnits.pop())
-            
-        if not game.player.freeUnits:
-            game.state = WaitPlayGameState()
-            game.observer.onGameStart(game)
+import gamestates
+from ai import AI 
 
 class Game:
     def __init__(self, gameStatesObserver):
@@ -45,12 +14,15 @@ class Game:
         
         self.players = [self.player, self.pc]
  
-        for player in self.players:
-            player.arrange()
+        self.ai = AI()
+        self.ai.arrange(self.pc)
 
         self.observer = weakref.proxy(gameStatesObserver)
-        self.state = InitGameState()
+        self.state = gamestates.initState
 
     def pushOn(self, cell):
         self.state.pushOn(self, cell)
 
+    def update(self):
+        self.ai.update(self)
+        

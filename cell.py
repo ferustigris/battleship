@@ -2,10 +2,16 @@
 
 import units
 
+
+class EmptyStateObserver:
+    def onCellStateChanged(self):
+        pass
+
 class Cell:
     def __init__(self):
         self.__state = units.defaultState
         self.__hidden = False
+        self.stateObserver = EmptyStateObserver()
 
     def hide(self):
         """ State will be shown as default"""
@@ -16,10 +22,10 @@ class Cell:
         self.__hidden = False
 
     def setUnit(self, unit):
-        self.__state = unit
+        self.setState(unit)
     
     def pushOn(self):
-        self.__state = self.__state.transfer(self)
+        self.setState(self.__state.transfer(self))
 
     @property
     def state(self):
@@ -28,3 +34,6 @@ class Cell:
             return "default"
         return self.__state.name
 
+    def setState(self, newState):
+        self.__state = newState
+        self.stateObserver.onCellStateChanged()

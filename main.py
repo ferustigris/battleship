@@ -13,10 +13,13 @@ class CellWidget(Button):
      def __init__(self, game, cell, **kwargs):
         super(CellWidget, self).__init__(**kwargs)
         self.cell = cell
+        self.cell.stateObserver = self
         self.game = game
 
      def onPress(self, e):
         self.game.pushOn(self.cell)
+
+     def onCellStateChanged(self):
         self.text = self.cell.state
 
 class OceanGame(Widget):
