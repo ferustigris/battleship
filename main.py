@@ -10,12 +10,13 @@ from kivy.properties import StringProperty
 from game import Game
 
 class CellWidget(Button):
-     def __init__(self, cell, **kwargs):
+     def __init__(self, game, cell, **kwargs):
         super(CellWidget, self).__init__(**kwargs)
         self.cell = cell
+        self.game = game
 
      def onPress(self, e):
-        self.cell.check()
+        self.game.pushOn(self.cell)
         self.text = self.cell.state
 
 class OceanGame(Widget):
@@ -32,7 +33,7 @@ class OceanApp(App):
 
         for field, player in zip(gameMainWidget.fields, game.players):
             for cell in player.cells:
-                btn1 = CellWidget(cell, text=cell.state)
+                btn1 = CellWidget(game, cell, text=cell.state)
                 btn1.bind(on_press=btn1.onPress)
                 field.add_widget(btn1)
         return gameMainWidget
