@@ -8,13 +8,15 @@ from kivy.uix.widget import Widget
 from kivy.properties import StringProperty
 
 from game import Game
+import weakref
 
 class CellWidget(Button):
      def __init__(self, game, cell, **kwargs):
         super(CellWidget, self).__init__(**kwargs)
         self.cell = cell
-        self.cell.stateObserver = self
+        self.cell.stateObserver = weakref.proxy(self)
         self.game = game
+        self.bind(on_press = self.onPress)
 
      def onPress(self, e):
         self.game.pushOn(self.cell)
@@ -25,11 +27,12 @@ class CellWidget(Button):
 class OceanGame(Widget):
     text = StringProperty("")
 
-    def __init__(self, cells, **kwargs):
+    def __init__(self, **kwargs):
         super(OceanGame, self).__init__(**kwargs)
-        self.cells = cells
+
     def onGameStart(self, game):
         self.text = "Start"
+
     def onGamePrepare(self, game):
         self.text = "Arrange your units"
 
@@ -37,14 +40,12 @@ class OceanGame(Widget):
 
 class OceanApp(App):
     def build(self):
-        gameMainWidget = OceanGame([])
+        gameMainWidget = OceanGame()
         game = Game(gameMainWidget)
 
         for field, player in zip(gameMainWidget.fields, game.players):
             for cell in player.cells:
-                btn1 = CellWidget(game, cell, text=cell.state)
-                btn1.bind(on_press=btn1.onPress)
-                field.add_widget(btn1)
+                field.add_widget(CellWidget(game, cell, text=cell.state))
         return gameMainWidget
 
 

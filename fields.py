@@ -8,5 +8,7 @@ class PlayerField(object):
 class ComputerField(PlayerField):
     def __init__(self, cells):
         super(ComputerField, self).__init__(cells)
+    def setUnit(self, index):
+        self.cells[index].setUnit(self.freeUnits.pop())
 
 

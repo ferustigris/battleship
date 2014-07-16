@@ -5,22 +5,20 @@ class AI:
         self.lastSteps = []
         
     def update(self, game):
-        while True:
-            x = random.randrange(len(game.player.cells))
-            if x not in self.lastSteps:
-                self.lastSteps.append(x)
-                break
-            if len(self.lastSteps) == len(game.player.cells):
-                break
+        allPossibleSteps = range(len(game.player.cells))
+        steps = list(set(allPossibleSteps).difference(self.lastSteps))
+        x = random.choice(steps)
+        self.lastSteps.append(x)
         game.player.cells[x].pushOn()
 
     def arrange(self, player):
-
         for cell in player.cells:
             cell.hide()
 
+        indexes = range(len(player.cells))
         while player.freeUnits:
-            rInd = random.randrange(len(player.cells))
-            player.cells[rInd].setUnit(player.freeUnits.pop())
+            rInd = random.choice(indexes)
+            indexes.remove(rInd)
+            player.setUnit(rInd)
 
  
