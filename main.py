@@ -6,6 +6,7 @@ from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.widget import Widget
 from kivy.properties import StringProperty
+from kivy.clock import Clock 
 
 from game import Game
 import weakref
@@ -26,15 +27,22 @@ class CellWidget(Button):
 
 class OceanGame(Widget):
     text = StringProperty("")
-
+    class CB:
+       def __init__(self, widget):
+            self.widget = widget
+       def __call__(self, *args, **kwargs):
+            self.widget.text = ""
+ 
     def __init__(self, **kwargs):
         super(OceanGame, self).__init__(**kwargs)
 
     def onGameStart(self, game):
         self.text = "Start"
+        Clock.schedule_once(self.CB(self), 1)
 
     def onGamePrepare(self, game):
         self.text = "Arrange your units"
+        Clock.schedule_once(self.CB(self), 1)
 
 
 

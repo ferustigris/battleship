@@ -7,11 +7,6 @@ class AbstractGameState:
     def pushOn(self, game, cell):
         pass
 
-class WaitPlayGameState(AbstractGameState):
-    def pushOn(self, game, cell):
-       game.state = PlayGameState()
-
-
 class PlayGameState(AbstractGameState):
     def pushOn(self, game, cell):
         if cell in game.pc.cells:
@@ -20,12 +15,8 @@ class PlayGameState(AbstractGameState):
 
 class InitGameState(AbstractGameState):
     def pushOn(self, game, cell):
-       game.state = WaitPrepareGameState()
-       game.observer.onGamePrepare(game) 
-
-class WaitPrepareGameState(AbstractGameState):
-    def pushOn(self, game, cell):
        game.state = PrepareGameState()
+       game.observer.onGamePrepare(game) 
 
 class PrepareGameState(AbstractGameState):
     def pushOn(self, game, cell):
@@ -33,7 +24,7 @@ class PrepareGameState(AbstractGameState):
             cell.setUnit(game.player.freeUnits.pop())
             
         if not game.player.freeUnits:
-            game.state = WaitPlayGameState()
+            game.state = PlayGameState()
             game.observer.onGameStart(game)
 
 
