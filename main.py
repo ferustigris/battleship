@@ -16,15 +16,15 @@ class CellWidget(Button):
     def __init__(self, game, cell, **kwargs):
         super(CellWidget, self).__init__(**kwargs)
         self.cell = cell
-        self.cell.stateObserver = weakref.proxy(self)
+        self.cell.stateObservers.append(weakref.proxy(self))
         self.game = game
         self.bind(on_press = self.onPress)
 
     def onPress(self, e):
         self.game.pushOn(self.cell)
 
-    def onCellStateChanged(self):
-        self.text = self.cell.state
+    def onCellStateChanged(self, state):
+        self.text = state
 
 class OceanGame(Widget):
     """Main widget"""
@@ -43,20 +43,30 @@ class OceanGame(Widget):
         self.text = "Start"
         Clock.schedule_once(self.CB(self), 1)
 
+    def onGameOver(self, game):
+        self.text = "Game over"
+        Clock.schedule_once(self.CB(self), 2)
+
     def onGamePrepare(self, game):
         self.text = "Arrange your units"
         Clock.schedule_once(self.CB(self), 1)
+
+    def onGameInit(self, game):
+        for field, player in zip(self.fields, self.game.players):
+            field.clear_widgets()
+            for cell in player.cells:
+                field.add_widget(CellWidget(self.game, cell, text=cell.state))
 
 
 
 class OceanApp(App):
     def build(self):
         gameMainWidget = OceanGame()
-        game = Game(gameMainWidget)
+        game = Game(gameStatesObserver=gameMainWidget)
+        
+        gameMainWidget.game = game
+        gameMainWidget.onGameInit(game)
 
-        for field, player in zip(gameMainWidget.fields, game.players):
-            for cell in player.cells:
-                field.add_widget(CellWidget(game, cell, text=cell.state))
         return gameMainWidget
 
 

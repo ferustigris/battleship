@@ -3,15 +3,15 @@
 import cellstates 
 
 
-class EmptyStateObserver:
-    def onCellStateChanged(self):
+class AbstractStateObserver:
+    def onCellStateChanged(self, state):
         pass
 
 class Cell:
     def __init__(self):
         self.__state = cellstates.defaultState
         self.__hidden = False
-        self.stateObserver = EmptyStateObserver()
+        self.stateObservers = []
 
     def hide(self):
         """ State will be shown as default"""
@@ -35,5 +35,9 @@ class Cell:
         return self.__state.name
 
     def setState(self, newState):
+        if self.__state == newState:
+            return
         self.__state = newState
-        self.stateObserver.onCellStateChanged()
+        for observer in self.stateObservers:
+            observer.onCellStateChanged(self.state)
+

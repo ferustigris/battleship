@@ -7,6 +7,7 @@ class AI:
     def update(self, game):
         allPossibleSteps = range(len(game.player.cells))
         steps = list(set(allPossibleSteps).difference(self.lastSteps))
+        print steps
         x = random.choice(steps)
         self.lastSteps.append(x)
         game.player.cells[x].pushOn()
