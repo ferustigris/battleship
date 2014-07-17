@@ -29,11 +29,20 @@ class EmptyCellState(AbstractCellState):
     """Just empty"""
     def transfer(self, cell):
         cell.unhide()
-        return self
+        return CheckedEmptyCellState()
 
     @property
     def name(self):
         return "empty"
+
+class CheckedEmptyCellState(EmptyCellState):
+    """Empty cell is checked"""
+    def transfer(self, cell):
+        return self
+
+    @property
+    def name(self):
+        return "checked" 
 
 class UnitCellState(AbstractCellState):
     """Unit are there"""

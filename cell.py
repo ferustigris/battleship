@@ -1,6 +1,6 @@
 " Cells module"
 
-import units
+import cellstates 
 
 
 class EmptyStateObserver:
@@ -9,7 +9,7 @@ class EmptyStateObserver:
 
 class Cell:
     def __init__(self):
-        self.__state = units.defaultState
+        self.__state = cellstates.defaultState
         self.__hidden = False
         self.stateObserver = EmptyStateObserver()
 

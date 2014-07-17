@@ -12,25 +12,28 @@ from game import Game
 import weakref
 
 class CellWidget(Button):
-     def __init__(self, game, cell, **kwargs):
+    """One cell widget"""
+    def __init__(self, game, cell, **kwargs):
         super(CellWidget, self).__init__(**kwargs)
         self.cell = cell
         self.cell.stateObserver = weakref.proxy(self)
         self.game = game
         self.bind(on_press = self.onPress)
 
-     def onPress(self, e):
+    def onPress(self, e):
         self.game.pushOn(self.cell)
 
-     def onCellStateChanged(self):
+    def onCellStateChanged(self):
         self.text = self.cell.state
 
 class OceanGame(Widget):
+    """Main widget"""
     text = StringProperty("")
     class CB:
-       def __init__(self, widget):
+        """ Callback which hide the titles""" 
+        def __init__(self, widget):
             self.widget = widget
-       def __call__(self, *args, **kwargs):
+        def __call__(self, *args, **kwargs):
             self.widget.text = ""
  
     def __init__(self, **kwargs):

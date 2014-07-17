@@ -1,9 +1,9 @@
-import units
+import cellstates 
 
 class PlayerField(object):
     def __init__(self, cells):
         self.cells = cells
-        self.freeUnits = [units.UnitCellState() for i in range(3)]
+        self.freeUnits = [cellstates.UnitCellState() for i in range(3)]
 
 class ComputerField(PlayerField):
     def __init__(self, cells):

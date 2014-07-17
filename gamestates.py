@@ -11,7 +11,7 @@ class PlayGameState(AbstractGameState):
     def pushOn(self, game, cell):
         if cell in game.pc.cells:
             cell.pushOn()
-        game.update()
+            game.update()
 
 class InitGameState(AbstractGameState):
     def pushOn(self, game, cell):
