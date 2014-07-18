@@ -3,11 +3,11 @@ from fields import PlayerField, ComputerField
 import weakref
 import gamestates
 from ai import AI 
-import levels
+from levels import LevelsFactory
 
 class Game:
     def __init__(self, gameStatesObserver):
-        self.lvl = levels.createDefault()
+        self.lvl = LevelsFactory().createDefault("default")
 
         self.observer = weakref.proxy(gameStatesObserver)
         self.state = gamestates.createInitState(self)

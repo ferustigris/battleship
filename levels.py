@@ -11,7 +11,12 @@ class AbstractLevel:
     def cells(self):
         pass 
 
-def createDefault():
-    from simplelevel import Level
-    return Level()
+class LevelsFactory:
+    levels = {}
+    def createDefault(self, levelName):
+        if levelName in self.levels.keys():
+            return levels[levelName]
+
+        from simplelevel import Level
+        return Level()
 
