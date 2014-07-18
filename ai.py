@@ -19,6 +19,6 @@ class AI:
         while player.freeUnits:
             rInd = random.choice(indexes)
             indexes.remove(rInd)
-            player.setUnit(rInd)
+            player.setUnit(player.cells[rInd])
 
  

@@ -1,4 +1,4 @@
-from fields import PlayerField, ComputerField
+from fields import PlayerField
 
 import weakref
 import gamestates
@@ -7,7 +7,7 @@ from levels import LevelsFactory
 
 class Game:
     def __init__(self, gameStatesObserver):
-        self.lvl = LevelsFactory().createDefault("default")
+        self.lvl = LevelsFactory().create("default")
 
         self.observer = weakref.proxy(gameStatesObserver)
         self.state = gamestates.createInitState(self)
@@ -17,9 +17,9 @@ class Game:
         
         self.ai = AI()
         self.player = PlayerField(lvl.cells(), lvl.units())
-        self.pc = ComputerField(lvl.cells(), lvl.units())
+        self.pc = PlayerField(lvl.cells(), lvl.units())
         
-        self.players = [self.player, self.pc]
+        self.fields = [self.player, self.pc]
         self.ai.arrange(self.pc)
 
     def pushOn(self, cell):

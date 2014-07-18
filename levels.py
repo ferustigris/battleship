@@ -13,7 +13,7 @@ class AbstractLevel:
 
 class LevelsFactory:
     levels = {}
-    def createDefault(self, levelName):
+    def create(self, levelName):
         if levelName in self.levels.keys():
             return levels[levelName]
 

@@ -11,12 +11,15 @@ class PlayerField(object):
         if state == "X":
             self.bombed += 1
 
+    def pushOn(self, game, cell):
+        if cell in self.cells:
+            cell.pushOn()
+            game.update()
 
-
-class ComputerField(PlayerField):
-    def __init__(self, cells, units):
-        super(ComputerField, self).__init__(cells, units)
-    def setUnit(self, index):
-        self.cells[index].setUnit(self.freeUnits.pop())
+    def setUnit(self, cell):
+        if cell in self.cells:
+            cell.setUnit(self.freeUnits.pop())
+            return len(self.freeUnits) > 0
+        return False
 
 

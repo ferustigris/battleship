@@ -10,16 +10,25 @@ class AbstractGameState:
     def update(self, game):
         pass
 
+def CheckLastSteps(func):
+    '''Step has been made'''
+    steps = []
+    def __CheckLastSteps(self, game, cell):
+        if cell in steps:
+            return None
+        steps.append(cell)
+        return func(self, game, cell)
+    return __CheckLastSteps
+       
+
 class PlayGameState(AbstractGameState):
-    def __init__(self):
-        self.steps = []
+    @CheckLastSteps
     def pushOn(self, game, cell):
-        if cell in game.pc.cells and cell not in self.steps:
-            cell.pushOn()
-            game.update()
-            self.steps.append(cell)
+        for field in game.fields:
+            field.pushOn(game, cell)
+
     def update(self, game):
-        for player in game.players:
+        for player in game.fields:
             if player.bombed == len(game.lvl.units()):
                 game.state = GameOverState()
                 game.observer.onGameOver(game)
@@ -42,14 +51,9 @@ class InitGameState(AbstractGameState):
         pass
 
 class PrepareGameState(AbstractGameState):
-    def __init__(self):
-        self.alive = []
+    @CheckLastSteps
     def pushOn(self, game, cell):
-        if cell in game.player.cells and cell not in self.alive:
-            cell.setUnit(game.player.freeUnits.pop())
-            self.alive.append(cell)
-            
-        if not game.player.freeUnits:
+        if not reduce(lambda r, x: r + x.setUnit(cell), game.fields, False):
             game.state = PlayGameState()
             game.observer.onGameStart(game)
     def update(self, game):
