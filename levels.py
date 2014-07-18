@@ -1,11 +1,17 @@
-from cell import Cell
-import cellstates 
+from abc import abstractmethod
 
-class Level:
+class AbstractLevel:
+    @abstractmethod
     def fieldSize(self):
-        return 5
+        pass 
+    @abstractmethod
     def units(self):
-        return [cellstates.UnitCellState() for i in range(self.fieldSize())]
+        pass 
+    @abstractmethod
     def cells(self):
-        return [Cell() for i in range(self.fieldSize() ** 2)]
+        pass 
+
+def createDefault():
+    from simplelevel import Level
+    return Level()
 
