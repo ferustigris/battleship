@@ -9,9 +9,45 @@ class AbstractPlayer:
     @abstractmethod
     def arrange(self, player):
         pass 
+    
+    @abstractmethod
+    def pushOn(self, game, cell):
+        pass
+    
+    @abstractmethod
+    def onCellStateChanged(self, state):
+        pass
+    
+    @abstractmethod
+    def isReadyToPlay(self):
+        pass
 
-class AI(AbstractPlayer):
+
+class Player(AbstractPlayer):
     def __init__(self):
+        self.field = {}# will be asigned by Field
+        self.bombed = 0 
+
+    def update(self, alienField):
+        pass 
+
+    def arrange(self, player):
+        pass 
+
+    def pushOn(self, game, cell):
+        pass
+
+    def onCellStateChanged(self, state):
+        if state == "X":
+            self.bombed += 1
+
+    def isReadyToPlay(self):
+        return len(self.field.freeUnits) == 0
+
+
+class AI(Player):
+    def __init__(self):
+        Player.__init__(self)
         self.lastSteps = []
         
     def update(self, alienField):
@@ -31,12 +67,7 @@ class AI(AbstractPlayer):
             indexes.remove(rInd)
             player.setUnit(player.cells[rInd])
 
-
-class Player:
-    def update(self, alienField):
-        pass 
-
-    def arrange(self, player):
-        pass 
-
+    def pushOn(self, game, cell):
+        cell.pushOn()
+        game.update()
 

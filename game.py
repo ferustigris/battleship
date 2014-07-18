@@ -26,3 +26,8 @@ class Game:
             player.update(alienField)
         self.state.update(self)
 
+    def isGameOver(self):
+        return self.lvl.isGameOver(self.players)
+
+    def isReadyToPlay(self):
+        return reduce(lambda r, player: r and player.isReadyToPlay(), self.players, True)

@@ -4,12 +4,18 @@ class AbstractLevel:
     @abstractmethod
     def fieldSize(self):
         pass 
+
     @abstractmethod
     def units(self):
         pass 
+
     @abstractmethod
     def cells(self):
         pass 
+
+    @abstractmethod
+    def isGameOver(self, players):
+        pass
 
 class LevelsFactory:
     levels = {}

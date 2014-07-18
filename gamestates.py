@@ -19,8 +19,7 @@ def CheckLastSteps(func):
         steps.append(cell)
         return func(self, game, cell)
     return __CheckLastSteps
-       
-
+    
 class PlayGameState(AbstractGameState):
     @CheckLastSteps
     def pushOn(self, game, cell):
@@ -28,10 +27,9 @@ class PlayGameState(AbstractGameState):
             field.pushOn(game, cell)
 
     def update(self, game):
-        for player in game.fields:
-            if player.bombed == len(game.lvl.units()):
-                game.state = GameOverState()
-                game.observer.onGameOver(game)
+        if game.isGameOver():
+            game.state = GameOverState()
+            game.observer.onGameOver(game)
 
 
 class GameOverState(AbstractGameState):
@@ -53,7 +51,10 @@ class InitGameState(AbstractGameState):
 class PrepareGameState(AbstractGameState):
     @CheckLastSteps
     def pushOn(self, game, cell):
-        if not reduce(lambda r, x: r + x.setUnit(cell), game.fields, False):
+        for field in game.fields:
+            field.setUnit(cell)
+
+        if game.isReadyToPlay():
             game.state = PlayGameState()
             game.observer.onGameStart(game)
     def update(self, game):
