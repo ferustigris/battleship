@@ -2,7 +2,6 @@
 
 import cellstates 
 
-
 class AbstractStateObserver:
     def onCellStateChanged(self, state):
         pass
