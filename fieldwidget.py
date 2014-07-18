@@ -8,6 +8,7 @@ from cellwidget import CellWidget
 class FieldWidget(Widget):
     """Main widget"""
     text = StringProperty("")
+    score = StringProperty("353")
     class CB:
         """ Callback which hide the titles""" 
         def __init__(self, widget):

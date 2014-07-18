@@ -17,4 +17,8 @@
         pos: root.width/2, root.height/2
         font_size: "150sp" 
         on_touch_down: root.text = ""
-<CellWidget>: 
+    Label:
+        text: str(root.score)
+        pos: root.width - self.width, root.height - self.height
+        font_size: "30sp" 
+<<CellWidget>: 

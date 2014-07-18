@@ -15,8 +15,8 @@ class Game:
     def initPlayers(self):
         lvl = self.lvl
         
-        self.players = [Player(), AI()]
-        self.fields = [PlayerField(player, lvl.cells(), lvl.units()) for player in self.players]
+        self.players = [Player(lvl.units()), AI(lvl.units())]
+        self.fields = [PlayerField(player, lvl.cells()) for player in self.players]
 
     def pushOn(self, cell):
         self.state.pushOn(self, cell)

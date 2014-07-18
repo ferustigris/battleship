@@ -7,7 +7,7 @@ class AbstractPlayer:
         pass 
 
     @abstractmethod
-    def arrange(self, player):
+    def arrange(self):
         pass 
     
     @abstractmethod
@@ -22,16 +22,20 @@ class AbstractPlayer:
     def isReadyToPlay(self):
         pass
 
+    @abstractmethod
+    def setUnitManual(self, cell):
+        pass 
 
 class Player(AbstractPlayer):
-    def __init__(self):
+    def __init__(self, units):
         self.field = {}# will be asigned by Field
+        self.units = units 
         self.bombed = 0 
 
     def update(self, alienField):
         pass 
 
-    def arrange(self, player):
+    def arrange(self):
         pass 
 
     def pushOn(self, game, cell):
@@ -42,12 +46,17 @@ class Player(AbstractPlayer):
             self.bombed += 1
 
     def isReadyToPlay(self):
-        return len(self.field.freeUnits) == 0
+        return not self.units
 
+    def setUnit(self, cell):
+        cell.setUnit(self.units.pop())
+
+    def setUnitManual(self, cell):
+        self.setUnit(cell)
 
 class AI(Player):
-    def __init__(self):
-        Player.__init__(self)
+    def __init__(self, *args):
+        Player.__init__(self, *args)
         self.lastSteps = []
         
     def update(self, alienField):
@@ -57,17 +66,21 @@ class AI(Player):
         self.lastSteps.append(x)
         alienField.cells[x].pushOn()
 
-    def arrange(self, player):
-        for cell in player.cells:
+    def arrange(self):
+        for cell in self.field.cells:
             cell.hide()
 
-        indexes = range(len(player.cells))
-        while player.freeUnits:
+        indexes = range(len(self.field.cells))
+        while self.units:
             rInd = random.choice(indexes)
             indexes.remove(rInd)
-            player.setUnit(player.cells[rInd])
+            self.setUnit(self.field.cells[rInd])
 
     def pushOn(self, game, cell):
         cell.pushOn()
         game.update()
+
+    def setUnitManual(self, cell):
+        pass 
+
 
