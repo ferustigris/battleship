@@ -1,15 +1,25 @@
 import random
+from abc import abstractmethod
 
-class AI:
+class AbstractPlayer:
+    @abstractmethod
+    def update(self, alienField):
+        pass 
+
+    @abstractmethod
+    def arrange(self, player):
+        pass 
+
+class AI(AbstractPlayer):
     def __init__(self):
         self.lastSteps = []
         
-    def update(self, game):
-        allPossibleSteps = range(len(game.player.cells))
+    def update(self, alienField):
+        allPossibleSteps = range(len(alienField.cells))
         steps = list(set(allPossibleSteps).difference(self.lastSteps))
         x = random.choice(steps)
         self.lastSteps.append(x)
-        game.player.cells[x].pushOn()
+        alienField.cells[x].pushOn()
 
     def arrange(self, player):
         for cell in player.cells:
@@ -21,4 +31,12 @@ class AI:
             indexes.remove(rInd)
             player.setUnit(player.cells[rInd])
 
- 
+
+class Player:
+    def update(self, alienField):
+        pass 
+
+    def arrange(self, player):
+        pass 
+
+

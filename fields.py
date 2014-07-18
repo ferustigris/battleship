@@ -1,11 +1,13 @@
 
 class PlayerField(object):
-    def __init__(self, cells, units):
+    def __init__(self, player, cells, units):
+        self.player = player
         self.cells = cells
         self.bombed = 0
         for cell in cells:
             cell.stateObservers.append(self)
         self.freeUnits = units 
+        player.arrange(self)
 
     def onCellStateChanged(self, state):
         if state == "X":
