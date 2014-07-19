@@ -41,12 +41,13 @@ class GameOverState(AbstractGameState):
 
 class InitGameState(AbstractGameState):
     def __init__(self, game):
-        game.initPlayers()
+       game.initPlayers()
     def pushOn(self, game, cell):
        game.state = PrepareGameState()
        game.observer.onGamePrepare(game) 
     def update(self, game):
-        pass
+       game.state = PrepareGameState()
+       game.observer.onGamePrepare(game) 
 
 class PrepareGameState(AbstractGameState):
     @CheckLastSteps

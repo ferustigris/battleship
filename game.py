@@ -9,7 +9,7 @@ class Game:
     def __init__(self, gameStatesObserver):
         self.lvl = LevelsFactory().create("default")
 
-        self.observer = weakref.proxy(gameStatesObserver)
+        self.observer = gameStatesObserver
         self.state = gamestates.createInitState(self)
 
     def initPlayers(self):
