@@ -40,15 +40,22 @@
 <HelloWidget>:    
     topHeight: self.height/5
     fieldHeight: self.height - self.topHeight
+    canvas:
+        Rectangle:
+            source: "images/background.png"
+            size: self.size
+            pos: self.pos
     BoxLayout: 
         orientation: "vertical"
         size: root.width/3, root.fieldHeight/2
         pos: root.width/3, root.height/4
         Button:
             text: "Human vs Android"
+            background_normal: "images/missile.png"
             on_press: root.startHumanVsAndroidGame()
         Button:
             text: "Human vs Human"
+            background_normal: "images/missile.png"
             on_press: root.startHumanVsHumanGame()
         Button:
             text: "Exit"
