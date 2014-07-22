@@ -13,6 +13,11 @@
     header: topGrid
     topHeight: self.height/5
     fieldHeight: self.height - self.topHeight
+    canvas:
+        Rectangle:
+            source: "images/background.png"
+            size: self.size
+            pos: self.pos
     BoxLayout: 
         id: topGrid
         pos: 0, root.height - root.topHeight
@@ -23,14 +28,17 @@
             font_size: "30sp" 
     BoxLayout: 
         size: root.width, root.fieldHeight
+        spacing: 10
         GridLayout:
             id: fieldGridLeft
             size: root.width/2, root.fieldHeight
             cols: 5
+            spacing: 5
         GridLayout:
             id: fieldGridRight
             size: root.width/2, root.fieldHeight
             cols: 5
+            spacing: 5
     Label:
         text: root.text
         pos: root.width/2, root.height/2
@@ -42,7 +50,7 @@
     fieldHeight: self.height - self.topHeight
     canvas:
         Rectangle:
-            source: "images/background.png"
+            source: "images/menu_background.png"
             size: self.size
             pos: self.pos
     BoxLayout: 
@@ -51,17 +59,19 @@
         pos: root.width/3, root.height/4
         Button:
             markup: True
-            text: "[color=000000][b]" + "Human vs Android" + "[/b][/color]"
-            background_normal: "images/missile.png"
+            text: ""
+            background_normal: "images/human_x_android_menuitem.png"
             on_press: root.startHumanVsAndroidGame()
         Button:
-            text: "Human vs Human"
-            background_normal: "images/missile.png"
+            text: ""
+            background_normal: "images/settings_menuitem.png"
             on_press: root.startHumanVsHumanGame()
         Button:
-            text: "Exit"
+            text: ""
             on_press: root.exitGame()
+            background_normal: "images/exit_menuitem.png"
 
 
 
 <CellWidget>: 
+    background_normal: "images/empty_cell.png"
