@@ -27,8 +27,9 @@
             text: "x" + str(root.score)
             font_size: "30sp" 
     BoxLayout: 
-        size: root.width, root.fieldHeight
-        spacing: 10
+        size: root.width - root.width/20, root.fieldHeight - root.height/20
+        pos: root.width/40, root.height/40
+        spacing: root.height/40
         GridLayout:
             id: fieldGridLeft
             size: root.width/2, root.fieldHeight
@@ -75,3 +76,4 @@
 
 <CellWidget>: 
     background_normal: "images/empty_cell.png"
+    size: 100, 100

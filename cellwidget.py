@@ -20,12 +20,12 @@ class CellWidget(Button):
     def onCellStateChanged(self, state):
         images = {
             "empty": "images/empty_cell.png",
-            "unit": "images/cell.png",
+            "unit": "images/ship.png",
             "default": "images/cell.png",
             "checked": "images/checked_cell.png",
             "X": "images/bad_cell.png",
         }
-        self.text = state
+        #self.text = state
         self.background_normal = images[state]
 
 
