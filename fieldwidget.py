@@ -28,10 +28,10 @@ class FieldWidget(Widget):
         Clock.schedule_once(self.CB(self), 2)
 
     def onGamePrepare(self, game):
-        for field, player in zip(self.fields, game.fields):
+        for field, fieldWidget in zip(self.fields, game.fields):
             field.clear_widgets()
-            for cell in player.cells:
-                field.add_widget(CellWidget(game, cell))
+            for cell in fieldWidget.cells:
+                field.add_widget(CellWidget(game, cell, fieldWidget))
 
         self.text = "Arrange your units"
         Clock.schedule_once(self.CB(self), 1)

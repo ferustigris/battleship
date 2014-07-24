@@ -17,6 +17,5 @@ class PlayerField(object):
     def setUnit(self, cell):
         if cell in self.cells:
             self.player.setUnitManual(cell)
-        return False
 
 

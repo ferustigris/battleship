@@ -18,8 +18,8 @@ class Game:
         self.players = [Player(lvl.units()), AI(lvl.units())]
         self.fields = [PlayerField(player, lvl.cells()) for player in self.players]
 
-    def pushOn(self, cell):
-        self.state.pushOn(self, cell)
+    def pushOn(self, cell, field):
+        self.state.pushOn(self, cell, field)
 
     def update(self):
         for player, alienField in zip(self.players, self.fields[::-1]):
