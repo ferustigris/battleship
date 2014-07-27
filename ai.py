@@ -27,10 +27,11 @@ class AbstractPlayer:
         pass 
 
 class Player(AbstractPlayer):
-    def __init__(self, units):
+    def __init__(self, units, game):
         self.field = {}# will be asigned by Field
         self.units = units 
         self.bombed = 0 
+        self.game = game
 
     def update(self, alienField):
         pass 
@@ -50,6 +51,7 @@ class Player(AbstractPlayer):
 
     def setUnit(self, cell):
         cell.setUnit(self.units.pop())
+        self.game.onUnitsCountChange(self.units)
 
     def setUnitManual(self, cell):
         self.setUnit(cell)

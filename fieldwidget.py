@@ -9,6 +9,7 @@ class FieldWidget(Widget):
     """Main widget"""
     text = StringProperty("")
     score = StringProperty("353")
+    units = StringProperty("")
     class CB:
         """ Callback which hide the titles""" 
         def __init__(self, widget):
@@ -38,3 +39,8 @@ class FieldWidget(Widget):
 
     def onGameInit(self, game):
         pass
+
+    def onUnitsCountChange(self, units):
+        self.units = str(len(units))
+
+

@@ -15,7 +15,7 @@ class Game:
     def initPlayers(self):
         lvl = self.lvl
         
-        self.players = [Player(lvl.units()), AI(lvl.units())]
+        self.players = [Player(lvl.units(), self), AI(lvl.units(), self)]
         self.fields = [PlayerField(player, lvl.cells()) for player in self.players]
 
     def pushOn(self, cell, field):
@@ -31,3 +31,6 @@ class Game:
 
     def isReadyToPlay(self):
         return reduce(lambda r, player: r and player.isReadyToPlay(), self.players, True)
+
+    def onUnitsCountChange(self, units):
+        self.observer.onUnitsCountChange(units)

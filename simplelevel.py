@@ -8,7 +8,7 @@ class Level(AbstractLevel):
         return 5
 
     def units(self):
-        return [cellstates.UnitCellState() for i in range(self.fieldSize())]
+        return ["default" for i in range(self.fieldSize())]
 
     def cells(self):
         return [Cell() for i in range(self.fieldSize() ** 2)]

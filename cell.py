@@ -21,7 +21,7 @@ class Cell:
         self.__hidden = False
 
     def setUnit(self, unit):
-        self.setState(unit)
+        self.setState(cellstates.UnitCellState())
     
     def pushOn(self):
         self.setState(self.__state.transfer(self))

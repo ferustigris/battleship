@@ -35,6 +35,10 @@ class GameStatesObserver:
         self.current.onGameInit(game)
         self.root.rootLayout.add_widget(self.current)
 
+    def onUnitsCountChange(self, units):
+        if hasattr(self, 'current'):
+            self.current.onUnitsCountChange(units)
+
 class OceanApp(App):
     '''Main appliaction class'''
     def build(self):

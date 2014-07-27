@@ -33,5 +33,7 @@ class HelloWidget(Widget):
     def onGameInit(self, game):
         pass 
  
+    def onUnitsCountChange(self, units):
+        pass
 
 
