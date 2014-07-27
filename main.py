@@ -13,6 +13,9 @@ import weakref
 class RootWidget(Widget):
     pass
 
+class UnitWidget(Widget):
+    pass
+
 class GameStatesObserver:
     def __init__(self, root):
         self.root = root

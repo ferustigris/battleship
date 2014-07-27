@@ -43,4 +43,3 @@ class FieldWidget(Widget):
     def onUnitsCountChange(self, units):
         self.units = str(len(units))
 
-

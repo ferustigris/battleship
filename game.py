@@ -34,3 +34,4 @@ class Game:
 
     def onUnitsCountChange(self, units):
         self.observer.onUnitsCountChange(units)
+
