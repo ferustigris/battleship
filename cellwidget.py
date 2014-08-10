@@ -18,7 +18,7 @@ class CellWidget(Button):
     def onPress(self, e):
         self.game.pushOn(self.cell, self.field)
 
-    def onCellStateChanged(self, state):
+    def onCellStateChanged(self, cell, state):
         images = {
             "empty": "images/empty_cell.png",
             "unit": "images/ship.png",

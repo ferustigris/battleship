@@ -12,6 +12,10 @@ class FieldWidget(Widget):
     score = NumericProperty(353)
     defaultUnits = NumericProperty(0)
     bombs = NumericProperty(0)
+
+    missile = NumericProperty(0)
+    missile_biology = NumericProperty(0)
+    missile_nuk = NumericProperty(0)
     class CB:
         """ Callback which hide the titles""" 
         def __init__(self, widget):
@@ -19,8 +23,9 @@ class FieldWidget(Widget):
         def __call__(self, *args, **kwargs):
             self.widget.text = ""
  
-    def __init__(self, **kwargs):
+    def __init__(self, defaultUnits, **kwargs):
         super(FieldWidget, self).__init__(**kwargs)
+        self.defaultUnits = defaultUnits
 
     def onGameStart(self, game):
         self.text = "Start"

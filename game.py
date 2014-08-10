@@ -10,6 +10,7 @@ class Game:
         self.lvl = LevelsFactory().create("default")
 
         self.observer = gameStatesObserver
+        self.observer.onGameInit(self)
         self.state = gamestates.createInitState(self)
 
     def initPlayers(self):

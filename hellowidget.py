@@ -34,6 +34,6 @@ class HelloWidget(Widget):
         pass 
  
     def onUnitsCountChange(self, units):
-        pass
+        self.observer.defaultUnits = len(units)
 
 

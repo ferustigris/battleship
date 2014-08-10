@@ -11,6 +11,7 @@ class Cell:
         self.__state = cellstates.defaultState
         self.__hidden = False
         self.stateObservers = []
+        self.decorators = {}
 
     def hide(self):
         """ State will be shown as default"""
@@ -22,7 +23,8 @@ class Cell:
 
     def setUnit(self, unit):
         self.setState(cellstates.UnitCellState())
-    
+        self.decorators["unit_type"] = unit
+
     def pushOn(self):
         self.setState(self.__state.transfer(self))
 
@@ -38,5 +40,5 @@ class Cell:
             return
         self.__state = newState
         for observer in self.stateObservers:
-            observer.onCellStateChanged(self.state)
+            observer.onCellStateChanged(self, self.state)
 

@@ -42,19 +42,21 @@ class Player(AbstractPlayer):
     def pushOn(self, game, cell):
         pass
 
-    def onCellStateChanged(self, state):
+    def onCellStateChanged(self, cell, state):
         if state == "X":
             self.bombed += 1
+            self.units += [cell.decorators["unit_type"]]
+            self.game.onUnitsCountChange(self.units)
 
     def isReadyToPlay(self):
         return not self.units
 
     def setUnit(self, cell):
         cell.setUnit(self.units.pop())
-        self.game.onUnitsCountChange(self.units)
 
     def setUnitManual(self, cell):
         self.setUnit(cell)
+        self.game.onUnitsCountChange(self.units)
 
 class AI(Player):
     def __init__(self, *args):
@@ -85,4 +87,8 @@ class AI(Player):
     def setUnitManual(self, cell):
         pass 
 
+    def onCellStateChanged(self, cell, state):
+        if state == "X":
+            self.bombed += 1
+            self.units += [cell.decorators["unit_type"]]
 
