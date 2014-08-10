@@ -1,6 +1,7 @@
 from kivy.uix.label import Label
 from kivy.uix.widget import Widget
 from kivy.properties import StringProperty
+from kivy.properties import NumericProperty
 from kivy.clock import Clock 
 
 from cellwidget import CellWidget
@@ -8,8 +9,8 @@ from cellwidget import CellWidget
 class FieldWidget(Widget):
     """Main widget"""
     text = StringProperty("")
-    score = StringProperty("353")
-    units = StringProperty("")
+    score = NumericProperty(353)
+    defaultUnits = NumericProperty(0)
     class CB:
         """ Callback which hide the titles""" 
         def __init__(self, widget):
@@ -41,5 +42,5 @@ class FieldWidget(Widget):
         pass
 
     def onUnitsCountChange(self, units):
-        self.units = str(len(units))
+        self.defaultUnits = len(units)
 

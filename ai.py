@@ -37,7 +37,7 @@ class Player(AbstractPlayer):
         pass 
 
     def arrange(self):
-        pass 
+        self.game.onUnitsCountChange(self.units)
 
     def pushOn(self, game, cell):
         pass
