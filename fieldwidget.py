@@ -11,6 +11,7 @@ class FieldWidget(Widget):
     text = StringProperty("")
     score = NumericProperty(353)
     defaultUnits = NumericProperty(0)
+    bombs = NumericProperty(0)
     class CB:
         """ Callback which hide the titles""" 
         def __init__(self, widget):
