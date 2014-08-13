@@ -48,5 +48,6 @@ class FieldWidget(Widget):
         pass
 
     def onUnitsCountChange(self, units):
-        self.defaultUnits = len(units)
+        self.defaultUnits = units.count("default_unit")
+        self.bombs = units.count("bomb")
 

@@ -1,6 +1,7 @@
 import kivy
 
 from kivy.uix.button import Button
+from kivy.graphics import Rectangle
 from kivy.properties import StringProperty
 
 import weakref
@@ -21,12 +22,17 @@ class CellWidget(Button):
     def onCellStateChanged(self, cell, state):
         images = {
             "empty": "images/empty_cell.png",
-            "unit": "images/ship.png",
-            "default": "images/cell.png",
+            "unit": "images/unit.png",
             "checked": "images/checked_cell.png",
             "X": "images/bad_cell.png",
+            "default": "images/cell.png",
+
+            "default_unit": "images/ship.png",
         }
-        #self.text = state
+
+        if state != "default":
+            with self.canvas.before:
+                for type, decorator in cell.decorators.items():
+                    Rectangle(source=images[decorator], pos=self.pos, size=self.size)
+
         self.background_normal = images[state]
-
-
