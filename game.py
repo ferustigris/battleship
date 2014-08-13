@@ -7,7 +7,8 @@ from levels import LevelsFactory
 
 class Game:
     def __init__(self, gameStatesObserver):
-        self.lvl = LevelsFactory().create("default")
+        self.levelsFactory = LevelsFactory()
+        self.lvl = self.levelsFactory.create("default")
 
         self.observer = gameStatesObserver
         self.observer.onGameInit(self)
@@ -28,7 +29,10 @@ class Game:
         self.state.update(self)
 
     def isGameOver(self):
-        return self.lvl.isGameOver(self.players)
+        if self.lvl.isGameOver(self.players):
+            self.lvl = self.levelsFactory.next(self.lvl)
+            return True
+        return False
 
     def isReadyToPlay(self):
         return reduce(lambda r, player: r and player.isReadyToPlay(), self.players, True)

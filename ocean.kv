@@ -18,9 +18,9 @@
         AsyncImage:
             source: str(root.source)
         Label:
-            text: "x" + str(root.text)
+            text: str(root.text)
             color: (0, 0, 0, 1)
-            font_size: "30sp" 
+            font_size: str(root.height/3) + "sp" 
 
 <FieldWidget>:    
     fields: [fieldGridLeft, fieldGridRight]

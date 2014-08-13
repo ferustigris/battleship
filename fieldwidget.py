@@ -23,9 +23,8 @@ class FieldWidget(Widget):
         def __call__(self, *args, **kwargs):
             self.widget.text = ""
  
-    def __init__(self, defaultUnits, **kwargs):
+    def __init__(self, **kwargs):
         super(FieldWidget, self).__init__(**kwargs)
-        self.defaultUnits = defaultUnits
 
     def onGameStart(self, game):
         self.text = "Start"
@@ -49,5 +48,5 @@ class FieldWidget(Widget):
 
     def onUnitsCountChange(self, units):
         self.defaultUnits = units.count("default_unit")
-        self.bombs = units.count("bomb")
+        self.bombs = units.count("bomb_unit")
 

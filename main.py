@@ -19,7 +19,7 @@ class UnitWidget(Widget):
 class GameStatesObserver:
     def __init__(self, root):
         self.root = root
-        self.defaultUnits = 0
+        self.units = []
 
     def onGameStart(self, game):
         self.current.onGameStart(game)
@@ -29,7 +29,9 @@ class GameStatesObserver:
 
     def onGamePrepare(self, game):
         self.root.rootLayout.clear_widgets()
-        self.current = FieldWidget(self.defaultUnits)
+        self.current = FieldWidget()
+
+        self.current.onUnitsCountChange(self.units)
         self.current.onGamePrepare(game)
         self.root.rootLayout.add_widget(self.current)
 

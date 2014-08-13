@@ -28,6 +28,7 @@ class CellWidget(Button):
             "default": "images/cell.png",
 
             "default_unit": "images/ship.png",
+            "bomb_unit": "images/bomb.png",
         }
 
         if state != "default":
