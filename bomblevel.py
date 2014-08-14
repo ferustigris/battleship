@@ -5,7 +5,7 @@ import cellstates
 
 class Level(AbstractLevel):
     def fieldSize(self):
-        return 10
+        return 5 
 
     def units(self):
         return ["bomb_unit"] + ["default_unit" for i in range(self.fieldSize())]

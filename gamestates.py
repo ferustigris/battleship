@@ -6,13 +6,15 @@ class AbstractGameState:
     @abstractmethod
     def pushOn(self, game, cell, field):
         pass
+
     @abstractmethod
     def update(self, game):
         pass
 
 def CheckLastSteps(func):
-    '''Step has been made'''
+    '''Check has step been made'''
     steps = []
+
     def __CheckLastSteps(self, game, cell, field):
         if cell in steps:
             return None
@@ -41,9 +43,11 @@ class GameOverState(AbstractGameState):
 class InitGameState(AbstractGameState):
     def __init__(self, game):
        game.initPlayers()
+
     def pushOn(self, game, cell, field):
        game.state = PrepareGameState()
-       game.observer.onGamePrepare(game) 
+       game.observer.onGamePrepare(game)
+
     def update(self, game):
        game.state = PrepareGameState()
        game.observer.onGamePrepare(game) 
@@ -56,8 +60,10 @@ class PrepareGameState(AbstractGameState):
         if game.isReadyToPlay():
             game.state = PlayGameState()
             game.observer.onGameStart(game)
+
     def update(self, game):
         pass
 
 def createInitState(game):
     return InitGameState(game)
+

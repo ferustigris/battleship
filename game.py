@@ -17,15 +17,16 @@ class Game:
     def initPlayers(self):
         lvl = self.lvl
         
-        self.players = [Player(lvl.units(), self), AI(lvl.units(), self)]
-        self.fields = [PlayerField(player, lvl.cells()) for player in self.players]
+        self.players = [Player(lvl.units(), self, lvl.cells()), AI(lvl.units(), self, lvl.cells())]
+        self.fields = [PlayerField(player) for player in self.players]
 
     def pushOn(self, cell, field):
         self.state.pushOn(self, cell, field)
 
     def update(self):
-        for player, alienField in zip(self.players, self.fields[::-1]):
-            player.update(alienField)
+        for player in self.players:
+            for alien in filter(lambda r: not (r == player), self.players):
+                player.update(alien)
         self.state.update(self)
 
     def isGameOver(self):

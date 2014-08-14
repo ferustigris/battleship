@@ -17,8 +17,8 @@ class UnitWidget(Widget):
     pass
 
 class GameStatesObserver:
-    def __init__(self, root):
-        self.root = root
+    def __init__(self, RootWidget):
+        self.RootWidget = RootWidget
         self.units = []
 
     def onGameStart(self, game):
@@ -28,18 +28,20 @@ class GameStatesObserver:
         self.current.onGameOver(game)
 
     def onGamePrepare(self, game):
-        self.root.rootLayout.clear_widgets()
+        self.RootWidget.rootLayout.clear_widgets()
         self.current = FieldWidget()
 
         self.current.onUnitsCountChange(self.units)
+        self.units = []
+
         self.current.onGamePrepare(game)
-        self.root.rootLayout.add_widget(self.current)
+        self.RootWidget.rootLayout.add_widget(self.current)
 
     def onGameInit(self, game):
-        self.root.rootLayout.clear_widgets()
+        self.RootWidget.rootLayout.clear_widgets()
         self.current = HelloWidget(game, self)
         self.current.onGameInit(game)
-        self.root.rootLayout.add_widget(self.current)
+        self.RootWidget.rootLayout.add_widget(self.current)
 
     def onUnitsCountChange(self, units):
         self.current.onUnitsCountChange(units)
@@ -47,10 +49,10 @@ class GameStatesObserver:
 class OceanApp(App):
     '''Main appliaction class'''
     def build(self):
-        root = RootWidget()
-        observer = GameStatesObserver(root)
-        root.game = Game(gameStatesObserver=observer)
-        return root
+        rootWidget = RootWidget()
+        observer = GameStatesObserver(rootWidget)
+        rootWidget.game = Game(gameStatesObserver=observer)
+        return rootWidget
 
 if __name__ == '__main__':
     OceanApp().run()

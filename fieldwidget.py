@@ -27,21 +27,18 @@ class FieldWidget(Widget):
         super(FieldWidget, self).__init__(**kwargs)
 
     def onGameStart(self, game):
-        self.text = "Start"
-        Clock.schedule_once(self.CB(self), 1)
+        self.showMessage("Start", 1)
 
     def onGameOver(self, game):
-        self.text = "Game over"
-        Clock.schedule_once(self.CB(self), 2)
+        self.showMessage("Game over", 2)
 
     def onGamePrepare(self, game):
         for field, fieldWidget in zip(self.fields, game.fields):
             field.clear_widgets()
             for cell in fieldWidget.cells:
                 field.add_widget(CellWidget(game, cell, fieldWidget))
+        self.showMessage("Arrange", 1)
 
-        self.text = "Arrange your units"
-        Clock.schedule_once(self.CB(self), 1)
 
     def onGameInit(self, game):
         pass
@@ -49,4 +46,9 @@ class FieldWidget(Widget):
     def onUnitsCountChange(self, units):
         self.defaultUnits = units.count("default_unit")
         self.bombs = units.count("bomb_unit")
+
+    def showMessage(self, text, timeout):
+        self.text = text 
+        Clock.schedule_once(self.CB(self), timeout)
+
 
