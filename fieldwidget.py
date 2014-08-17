@@ -12,6 +12,7 @@ class FieldWidget(Widget):
     score = NumericProperty(353)
     defaultUnits = NumericProperty(0)
     bombs = NumericProperty(0)
+    fieldSize = NumericProperty(5)
 
     missile = NumericProperty(0)
     missile_biology = NumericProperty(0)
@@ -39,7 +40,6 @@ class FieldWidget(Widget):
                 field.add_widget(CellWidget(game, cell, fieldWidget))
         self.showMessage("Arrange", 1)
 
-
     def onGameInit(self, game):
         pass
 
@@ -51,4 +51,6 @@ class FieldWidget(Widget):
         self.text = text 
         Clock.schedule_once(self.CB(self), timeout)
 
+    def onFieldSizeChanged(self, size):
+        self.fieldSize = size
 

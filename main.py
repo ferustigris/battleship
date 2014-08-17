@@ -46,6 +46,9 @@ class GameStatesObserver:
     def onUnitsCountChange(self, units):
         self.current.onUnitsCountChange(units)
 
+    def onFieldSizeChanged(self, size):
+        self.current.onFieldSizeChanged(size)
+
 class OceanApp(App):
     '''Main appliaction class'''
     def build(self):

@@ -33,6 +33,9 @@ class HelloWidget(Widget):
     def onGameInit(self, game):
         pass 
  
+    def onFieldSizeChanged(self, size):
+        pass
+
     def onUnitsCountChange(self, units):
         self.observer.units = units
 
