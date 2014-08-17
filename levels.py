@@ -21,6 +21,14 @@ class AbstractLevel:
     def nextLevel(self):
         return "default"
 
+def check(condition):
+    """ Decorators factory for check game over conditions"""
+    def checkDecorator(func):
+        """ Decorator. Check condition first and original function second """
+        def checkCondition(self, player):
+            return condition(self, player) or func(self, player)
+        return checkCondition
+    return checkDecorator 
 
 class LevelsFactory:
     levels = {}

@@ -31,9 +31,18 @@ class PlayGameState(AbstractGameState):
         if game.isGameOver():
             game.state = GameOverState()
             game.observer.onGameOver(game)
-
+        if game.isLevelUp():
+            game.state = GameLevelUp()
+            game.observer.onLevelUp(game)
 
 class GameOverState(AbstractGameState):
+    def pushOn(self, game, cell, field):
+       game.state = InitGameState(game)
+       game.observer.onGameInit(game)
+    def update(self, game):
+        pass
+
+class GameLevelUp(AbstractGameState):
     def pushOn(self, game, cell, field):
        game.state = InitGameState(game)
        game.observer.onGameInit(game)

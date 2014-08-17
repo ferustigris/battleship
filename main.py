@@ -27,6 +27,9 @@ class GameStatesObserver:
     def onGameOver(self, game):
         self.current.onGameOver(game)
 
+    def onLevelUp(self, game):
+        self.current.onLevelUp(game)
+
     def onGamePrepare(self, game):
         self.RootWidget.rootLayout.clear_widgets()
         self.current = FieldWidget()

@@ -28,7 +28,10 @@ class FieldWidget(Widget):
         super(FieldWidget, self).__init__(**kwargs)
 
     def onGameStart(self, game):
-        self.showMessage("Start", 1)
+        self.showMessage("start", 1)
+
+    def onLevelUp(self, game):
+        self.showMessage("Level up", 2)
 
     def onGameOver(self, game):
         self.showMessage("Game over", 2)

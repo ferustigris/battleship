@@ -1,7 +1,11 @@
-from levels import AbstractLevel, LevelsFactory
+from levels import AbstractLevel, LevelsFactory, check
 
 from cell import Cell
 import cellstates 
+
+def allBombed(self, player):
+    """ Check, is all players units are bombed """
+    return  player.bombed == self.fieldSize()
 
 class Level(AbstractLevel):
     def fieldSize(self):
@@ -13,10 +17,8 @@ class Level(AbstractLevel):
     def cells(self):
         return [Cell() for i in range(self.fieldSize() ** 2)]
 
-    def isGameOver(self, players):
-        for player in players:
-            if player.bombed == self.fieldSize():
-                return True
+    @check(allBombed)
+    def isGameOver(self, player):
         return False
 
     def nextLevel(self):
