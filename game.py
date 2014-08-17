@@ -32,7 +32,7 @@ class Game:
     def isGameOver(self):
         if self.lvl.isGameOver(self.players):
             self.lvl = self.levelsFactory.next(self.lvl)
-            self.onserver.onFieldSizeChanged(self.lvl.fieldSize())
+            self.observer.onFieldSizeChanged(self.lvl.fieldSize())
             return True
         return False
 
