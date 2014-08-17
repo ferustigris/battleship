@@ -33,11 +33,7 @@ class Game:
         return self.lvl.isGameOver(self.players[0])
 
     def isLevelUp(self):
-        if self.lvl.isGameOver(self.players[1]):
-            self.lvl = self.levelsFactory.next(self.lvl)
-            self.observer.onFieldSizeChanged(self.lvl.fieldSize())
-            return True
-        return False
+        return self.lvl.isGameOver(self.players[1])
 
     def isReadyToPlay(self):
         return reduce(lambda r, player: r and player.isReadyToPlay(), self.players, True)

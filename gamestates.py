@@ -32,6 +32,9 @@ class PlayGameState(AbstractGameState):
             game.state = GameOverState()
             game.observer.onGameOver(game)
         if game.isLevelUp():
+            game.lvl = game.levelsFactory.next(game.lvl)
+            game.observer.onFieldSizeChanged(game.lvl.fieldSize())
+
             game.state = GameLevelUp()
             game.observer.onLevelUp(game)
 
