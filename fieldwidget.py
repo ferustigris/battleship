@@ -3,13 +3,12 @@ from kivy.uix.widget import Widget
 from kivy.properties import StringProperty
 from kivy.properties import NumericProperty
 from kivy.clock import Clock 
-
 from cellwidget import CellWidget
 
 class FieldWidget(Widget):
     """Main widget"""
     text = StringProperty("")
-    score = NumericProperty(353)
+    score = NumericProperty(0)
     defaultUnits = NumericProperty(0)
     bombs = NumericProperty(0)
     fieldSize = NumericProperty(5)
@@ -17,6 +16,8 @@ class FieldWidget(Widget):
     missile = NumericProperty(0)
     missile_biology = NumericProperty(0)
     missile_nuk = NumericProperty(0)
+
+    
     class CB:
         """ Callback which hide the titles""" 
         def __init__(self, widget):
@@ -37,6 +38,7 @@ class FieldWidget(Widget):
         self.showMessage("Game over", 2)
 
     def onGamePrepare(self, game):
+        self.score = game.score
         for field, fieldWidget in zip(self.fields, game.fields):
             field.clear_widgets()
             for cell in fieldWidget.cells:
@@ -57,3 +59,6 @@ class FieldWidget(Widget):
     def onFieldSizeChanged(self, size):
         self.fieldSize = size
 
+    def onScoreChanged(self, score):
+        self.score = score
+        #self.showMessage(str(bonus), 1) # TODO: make clouds with added bonuses

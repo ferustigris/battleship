@@ -21,6 +21,10 @@ class AbstractLevel:
     def nextLevel(self):
         return "default"
 
+    @abstractmethod
+    def name(self):
+        return "default"
+
 def check(condition):
     """ Decorators factory for check game over conditions"""
     def checkDecorator(func):

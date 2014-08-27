@@ -52,6 +52,9 @@ class GameStatesObserver:
     def onFieldSizeChanged(self, size):
         self.current.onFieldSizeChanged(size)
 
+    def onScoreChanged(self, bonus):
+        self.current.onScoreChanged(bonus)
+
 class OceanApp(App):
     '''Main appliaction class'''
     def build(self):

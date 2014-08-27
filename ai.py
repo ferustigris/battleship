@@ -91,4 +91,5 @@ class AI(Player):
         if state == "X":
             self.bombed += 1
             self.units += [cell.decorators["unit_type"]]
+            self.game.onScore(1)
 
