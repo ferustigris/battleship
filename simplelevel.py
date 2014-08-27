@@ -2,6 +2,7 @@ from levels import AbstractLevel, LevelsFactory, check
 
 from cell import Cell
 import cellstates 
+import bomblevel
 
 def allBombed(self, player):
     """ Check, is all players units are bombed """
@@ -22,7 +23,7 @@ class Level(AbstractLevel):
         return False
 
     def nextLevel(self):
-        import bomblevel
         return "bomblevel"
 
 LevelsFactory.levels["default"] = Level()
+

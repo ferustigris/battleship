@@ -27,8 +27,9 @@ class Level(AbstractLevel):
         return False
 
     def nextLevel(self):
-        # import simplelevel 
         return "default"
 
+    def name(self):
+        return "bomblevel"
  
 LevelsFactory.levels["bomblevel"] = Level()

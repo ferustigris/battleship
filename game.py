@@ -14,8 +14,9 @@ class Game:
     def __init__(self, gameStatesObserver):
         levelName = "default"
         if self.store.exists('game'):
-            self.score = self.store.get('game')['score']
-            #levelName = self.store.get('game')['level']
+            gm = self.store.get('game')
+            self.score = gm['score']
+            levelName = gm['level']
 
         self.levelsFactory = LevelsFactory()
         self.lvl = self.levelsFactory.create(levelName)
@@ -54,5 +55,14 @@ class Game:
     def onScore(self, bonus):
         self.score += bonus
         self.observer.onScoreChanged(self.score)
-        self.store.put('game', score=self.score)
+        self.save()
+
+    def onLevelUp(self, level):
+        self.lvl = level
+        self.observer.onFieldSizeChanged(level.fieldSize())
+        self.save()
+
+    def save(self):
+        """ Save game params into storage """
+        self.store.put('game', level=self.lvl.name(), score=self.score)
 
