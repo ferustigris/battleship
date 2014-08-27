@@ -5,10 +5,20 @@ import gamestates
 from ai import AI, Player 
 from levels import LevelsFactory
 
+from kivy.storage.jsonstore import JsonStore
+
 class Game:
+    store = JsonStore('battleship.json')
+    score = 0
+    
     def __init__(self, gameStatesObserver):
+        levelName = "default"
+        if self.store.exists('game'):
+            self.score = self.store.get('game')['score']
+            #levelName = self.store.get('game')['level']
+
         self.levelsFactory = LevelsFactory()
-        self.lvl = self.levelsFactory.create("default")
+        self.lvl = self.levelsFactory.create(levelName)
 
         self.observer = gameStatesObserver
         self.observer.onGameInit(self)
@@ -40,4 +50,9 @@ class Game:
 
     def onUnitsCountChange(self, units):
         self.observer.onUnitsCountChange(units)
+
+    def onScore(self, bonus):
+        self.score += bonus
+        self.observer.onScoreChanged(self.score)
+        self.store.put('game', score=self.score)
 
