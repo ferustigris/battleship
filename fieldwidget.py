@@ -13,9 +13,8 @@ class FieldWidget(Widget):
     bombs = NumericProperty(0)
     fieldSize = NumericProperty(5)
 
-    missile = NumericProperty(0)
-    missile_biology = NumericProperty(0)
-    missile_nuk = NumericProperty(0)
+    biology_bombs = NumericProperty(0)
+    nuclear_bombs = NumericProperty(0)
 
     
     class CB:
@@ -51,6 +50,8 @@ class FieldWidget(Widget):
     def onUnitsCountChange(self, units):
         self.defaultUnits = units.count("default_unit")
         self.bombs = units.count("bomb_unit")
+        self.nuclear_bombs = units.count("nuclear_bomb_unit")
+        self.biology_bombs = units.count("biology_bomb_unit")
 
     def showMessage(self, text, timeout):
         self.text = text 

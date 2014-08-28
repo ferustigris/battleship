@@ -29,7 +29,9 @@ class CellWidget(Button):
 
             "default_unit": "images/ship.png",
             "bomb_unit": "images/bomb.png",
-        }
+            "nuclear_bomb_unit": "images/nuclear_bomb.png",
+            "biology_bomb_unit": "images/biology_bomb.png",
+            }
 
         if state != "default":
             with self.canvas.before:
