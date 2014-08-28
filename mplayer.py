@@ -15,7 +15,7 @@ class CB:
 class MPlayer:
     __startSound = SoundLoader.load('sounds/tube.wav')
     __radio1 = SoundLoader.load('sounds/radio.wav')
-    __radio1 = SoundLoader.load('sounds/radio_base.wav')
+    __radio2 = SoundLoader.load('sounds/radio_base.wav')
     __backgroundSound = SoundLoader.load('sounds/sonar.wav')
 
     def playMusic(self):
