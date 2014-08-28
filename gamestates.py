@@ -1,6 +1,7 @@
 """Game states"""
 
 from abc import ABCMeta, abstractmethod
+from mplayer import mplayer 
 
 class AbstractGameState:
     @abstractmethod
@@ -23,6 +24,10 @@ def CheckLastSteps(func):
     return __CheckLastSteps
     
 class PlayGameState(AbstractGameState):
+    def __init__(self):
+        mplayer.startGame()
+        mplayer.playMusic()
+
     @CheckLastSteps
     def pushOn(self, game, cell, field):
         field.pushOn(game, cell)
@@ -31,13 +36,18 @@ class PlayGameState(AbstractGameState):
         if game.isGameOver():
             game.state = GameOverState()
             game.observer.onGameOver(game)
+            mplayer.stopMusic() 
         if game.isLevelUp():
             game.onLevelUp(game.levelsFactory.next(game.lvl))
 
             game.state = GameLevelUp()
             game.observer.onLevelUp(game)
+            mplayer.stopMusic() 
 
 class GameOverState(AbstractGameState):
+    def __init__(self):
+        mplayer.gameOver()
+
     def pushOn(self, game, cell, field):
        game.state = InitGameState(game)
        game.observer.onGameInit(game)
@@ -45,6 +55,9 @@ class GameOverState(AbstractGameState):
         pass
 
 class GameLevelUp(AbstractGameState):
+    def __init__(self):
+        mplayer.levelUp()
+
     def pushOn(self, game, cell, field):
        game.state = InitGameState(game)
        game.observer.onGameInit(game)

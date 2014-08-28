@@ -10,7 +10,7 @@ from kivy.storage.jsonstore import JsonStore
 class Game:
     store = JsonStore('battleship.json')
     score = 0
-    
+
     def __init__(self, gameStatesObserver):
         levelName = "default"
         if self.store.exists('game'):
