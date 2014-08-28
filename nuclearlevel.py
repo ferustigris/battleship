@@ -2,11 +2,10 @@ from levels import AbstractLevel, LevelsFactory, check
 
 from cell import Cell
 import cellstates 
-import nuclearlevel 
 
 def bombBombed(self, player):
     """ Check, is bomb was bombed """
-    return "bomb_unit" in player.units
+    return "nuclear_bomb_unit" in player.units
 
 def allBombed(self, player):
     """ Check, is all players units are bombed """
@@ -17,7 +16,7 @@ class Level(AbstractLevel):
         return 5 
 
     def units(self):
-        return ["bomb_unit"] + ["default_unit" for i in range(self.fieldSize())]
+        return ["nuclear_bomb_unit"] + ["default_unit" for i in range(self.fieldSize())]
 
     def cells(self):
         return [Cell() for i in range(self.fieldSize() ** 2)]
@@ -28,9 +27,9 @@ class Level(AbstractLevel):
         return False
 
     def nextLevel(self):
-        return "nuclearlevel"
+        return "default"
 
     def name(self):
-        return "bomblevel"
+        return "nuclearlevel"
  
-LevelsFactory.levels["bomblevel"] = Level()
+LevelsFactory.levels["nuclearlevel"] = Level()

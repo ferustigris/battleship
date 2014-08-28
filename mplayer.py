@@ -29,7 +29,9 @@ class MPlayer:
 
     def __init__(self):
         self.__bombs['default_unit'] = SoundLoader.load('sounds/bomb2.wav')
-        self.__bombs['bomb_unit'] = SoundLoader.load('sounds/bomb3.wav')
+        self.__bombs['bomb_unit'] = SoundLoader.load('sounds/shut.wav')
+        self.__bombs['nuclear_bomb_unit'] = SoundLoader.load('sounds/bomb3.wav')
+        self.__bombs['biology_bomb_unit'] = SoundLoader.load('sounds/bomb3.wav')
 
     def playMusic(self):
         self.__sonars.append(CB(self.__sonar, lambda : 5))
