@@ -35,7 +35,6 @@ class Player(AbstractPlayer):
     def __init__(self, units, game, cells):
         self.cells = cells 
         self.units = units 
-        self.bombed = 0 
         self.game = game
         self.ships = []
 
@@ -50,9 +49,9 @@ class Player(AbstractPlayer):
 
     def onCellStateChanged(self, cell, state):
         if state == "X":
-            self.ships.remove(cell)
-            self.bombed += 1
             unit = cell.decorators["unit_type"]
+            if unit == 'default_unit':
+                self.ships.remove(cell)
             self.units += [unit]
             self.game.onBombed(self, unit)
             self.onBombed(cell)
@@ -68,7 +67,8 @@ class Player(AbstractPlayer):
         unit = self.units.pop()
         cell.setUnit(unit)
         mplayer.setUnit(unit)
-        self.ships.append(cell)
+        if unit == 'default_unit':
+            self.ships.append(cell)
 
     def setUnitManual(self, cell):
         self.setUnit(cell)
