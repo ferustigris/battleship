@@ -3,33 +3,36 @@ from kivy.clock import Clock
 import random
 
 class CB:
+    term = False
     def __init__(self, sound, timeout):
         self.sound = sound
         self.t = timeout
         Clock.schedule_once(self, self.t())
 
     def __call__(self, *args, **kwargs):
+        if self.term:
+            return
         self.sound.play()
         Clock.schedule_once(self, self.t())
 
 class MPlayer:
-    __startSound = SoundLoader.load('sounds/tube.wav')
+    __start = SoundLoader.load('sounds/alarm.wav')
     __radio1 = SoundLoader.load('sounds/radio.wav')
     __radio2 = SoundLoader.load('sounds/radio_base.wav')
-    __backgroundSound = SoundLoader.load('sounds/sonar.wav')
+    __sonar = SoundLoader.load('sounds/sonar.wav')
+
+    __sonars = []
 
     def playMusic(self):
-        #self.__backgroundSound.loop = True;
-        #self.__backgroundSound.play()
-        CB(self.__backgroundSound, lambda : 5)
-        CB(self.__radio1, lambda : random.randint(10, 60))
-        CB(self.__radio2, lambda : random.randint(10, 60))
+        self.__sonars.append(CB(self.__sonar, lambda : 5))
+        self.__sonars.append(CB(self.__radio1, lambda : random.randint(10, 60)))
+        self.__sonars.append(CB(self.__radio2, lambda : random.randint(10, 60)))
 
     def stopMusic(self):
-        #self.__backgroundSound.loop = False;
-        pass
+        for sound in self.__sonars:
+            sound.term = True
 
     def startGame(self):
-        self.__startSound.play()
+        self.__start.play()
 
 mplayer = MPlayer()
