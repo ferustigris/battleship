@@ -62,6 +62,10 @@ class Game:
         self.observer.onFieldSizeChanged(level.fieldSize())
         self.save()
 
+    def onBombed(self, player, unit):
+        enemy = self.players[0] if player == self.players[1] else self.players[1]
+        self.lvl.onBombed(player, unit, enemy)
+
     def save(self):
         """ Save game params into storage """
         self.store.put('game', level=self.lvl.name(), score=self.score)

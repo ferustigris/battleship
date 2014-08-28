@@ -1,16 +1,13 @@
 from levels import AbstractLevel, LevelsFactory, check
+import random
 
 from cell import Cell
 import cellstates 
 import nuclearlevel 
 
-def bombBombed(self, player):
-    """ Check, is bomb was bombed """
-    return "bomb_unit" in player.units
-
 def allBombed(self, player):
     """ Check, is all players units are bombed """
-    return  player.bombed == self.fieldSize()
+    return player.units.count('default_unit') == self.fieldSize()
 
 class Level(AbstractLevel):
     def fieldSize(self):
@@ -23,7 +20,6 @@ class Level(AbstractLevel):
         return [Cell() for i in range(self.fieldSize() ** 2)]
 
     @check(allBombed)
-    @check(bombBombed)
     def isGameOver(self, player):
         return False
 
@@ -32,5 +28,10 @@ class Level(AbstractLevel):
 
     def name(self):
         return "bomblevel"
- 
+
+    def onBombed(self, player, unit, enemy):
+        if unit == 'bomb_unit':
+            ship = random.choice(enemy.ships)
+            ship.pushOn()
+
 LevelsFactory.levels["bomblevel"] = Level()

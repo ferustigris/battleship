@@ -25,6 +25,9 @@ class AbstractLevel:
     def name(self):
         return "default"
 
+    def onBombed(self, player, unit, enemy):
+        pass
+
 def check(condition):
     """ Decorators factory for check game over conditions"""
     def checkDecorator(func):

@@ -37,6 +37,7 @@ class Player(AbstractPlayer):
         self.units = units 
         self.bombed = 0 
         self.game = game
+        self.ships = []
 
     def update(self, alien):
         pass 
@@ -49,10 +50,13 @@ class Player(AbstractPlayer):
 
     def onCellStateChanged(self, cell, state):
         if state == "X":
+            self.ships.remove(cell)
             self.bombed += 1
-            self.units += [cell.decorators["unit_type"]]
+            unit = cell.decorators["unit_type"]
+            self.units += [unit]
+            self.game.onBombed(self, unit)
             self.onBombed(cell)
-            mplayer.destroyUnit(cell.decorators["unit_type"])
+            mplayer.destroyUnit(unit)
 
     def onBombed(self, cell):
         self.game.onUnitsCountChange(self.units)
@@ -64,6 +68,7 @@ class Player(AbstractPlayer):
         unit = self.units.pop()
         cell.setUnit(unit)
         mplayer.setUnit(unit)
+        self.ships.append(cell)
 
     def setUnitManual(self, cell):
         self.setUnit(cell)
