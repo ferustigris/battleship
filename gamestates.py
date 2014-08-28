@@ -45,6 +45,9 @@ class PlayGameState(AbstractGameState):
             mplayer.stopMusic() 
 
 class GameOverState(AbstractGameState):
+    def __init__(self):
+        mplayer.gameOver()
+
     def pushOn(self, game, cell, field):
        game.state = InitGameState(game)
        game.observer.onGameInit(game)
@@ -52,6 +55,9 @@ class GameOverState(AbstractGameState):
         pass
 
 class GameLevelUp(AbstractGameState):
+    def __init__(self):
+        mplayer.levelUp()
+
     def pushOn(self, game, cell, field):
        game.state = InitGameState(game)
        game.observer.onGameInit(game)

@@ -17,11 +17,19 @@ class CB:
 
 class MPlayer:
     __start = SoundLoader.load('sounds/alarm.wav')
+    __gameOver = SoundLoader.load('sounds/tube.wav')
+    __levelUp = SoundLoader.load('sounds/kolokol.wav')
     __radio1 = SoundLoader.load('sounds/radio.wav')
     __radio2 = SoundLoader.load('sounds/radio_base.wav')
     __sonar = SoundLoader.load('sounds/sonar.wav')
+    __button = SoundLoader.load('sounds/button.wav')
 
     __sonars = []
+    __bombs = {}
+
+    def __init__(self):
+        self.__bombs['default_unit'] = SoundLoader.load('sounds/bomb2.wav')
+        self.__bombs['bomb_unit'] = SoundLoader.load('sounds/bomb3.wav')
 
     def playMusic(self):
         self.__sonars.append(CB(self.__sonar, lambda : 5))
@@ -32,7 +40,19 @@ class MPlayer:
         for sound in self.__sonars:
             sound.term = True
 
+    def gameOver(self):
+        self.__gameOver.play()
+
+    def levelUp(self):
+        self.__levelUp.play()
+
     def startGame(self):
         self.__start.play()
+
+    def destroyUnit(self, unit):
+        self.__bombs[unit].play()
+
+    def setUnit(self, unit):
+        self.__button.play()
 
 mplayer = MPlayer()

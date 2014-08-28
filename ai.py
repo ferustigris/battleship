@@ -1,5 +1,6 @@
 import random
 from abc import abstractmethod
+from mplayer import mplayer 
 
 class AbstractPlayer:
     @abstractmethod
@@ -16,6 +17,10 @@ class AbstractPlayer:
     
     @abstractmethod
     def onCellStateChanged(self, state):
+        pass
+    
+    @abstractmethod
+    def onBombed(self, cell):
         pass
     
     @abstractmethod
@@ -46,13 +51,19 @@ class Player(AbstractPlayer):
         if state == "X":
             self.bombed += 1
             self.units += [cell.decorators["unit_type"]]
-            self.game.onUnitsCountChange(self.units)
+            self.onBombed(cell)
+            mplayer.destroyUnit(cell.decorators["unit_type"])
+
+    def onBombed(self, cell):
+        self.game.onUnitsCountChange(self.units)
 
     def isReadyToPlay(self):
         return not self.units
 
     def setUnit(self, cell):
-        cell.setUnit(self.units.pop())
+        unit = self.units.pop()
+        cell.setUnit(unit)
+        mplayer.setUnit(unit)
 
     def setUnitManual(self, cell):
         self.setUnit(cell)
@@ -87,9 +98,6 @@ class AI(Player):
     def setUnitManual(self, cell):
         pass 
 
-    def onCellStateChanged(self, cell, state):
-        if state == "X":
-            self.bombed += 1
-            self.units += [cell.decorators["unit_type"]]
-            self.game.onScore(1)
+    def onBombed(self, cell):
+        self.game.onScore(1)
 
