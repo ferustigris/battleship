@@ -3,7 +3,7 @@ import bomblevel
 
 def allBombed(self, player):
     """ Check, is all players units are bombed """
-    return  player.bombed == self.fieldSize()
+    return player.units.count('default_unit') == self.fieldSize()
 
 class Level(AbstractLevel):
     def fieldSize(self):
