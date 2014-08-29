@@ -53,7 +53,7 @@ class Player(AbstractPlayer):
             if unit == 'default_unit':
                 self.ships.remove(cell)
             self.units += [unit]
-            self.game.onBombed(self, unit)
+            self.game.onBombed(self, cell)
             self.onBombed(cell)
             mplayer.destroyUnit(unit)
 

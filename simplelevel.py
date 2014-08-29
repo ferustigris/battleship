@@ -1,7 +1,4 @@
 from levels import AbstractLevel, LevelsFactory, check
-
-from cell import Cell
-import cellstates 
 import bomblevel
 
 def allBombed(self, player):
@@ -14,9 +11,6 @@ class Level(AbstractLevel):
 
     def units(self):
         return ["default_unit" for i in range(self.fieldSize())]
-
-    def cells(self):
-        return [Cell() for i in range(self.fieldSize() ** 2)]
 
     @check(allBombed)
     def isGameOver(self, player):

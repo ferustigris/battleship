@@ -1,8 +1,5 @@
 from levels import AbstractLevel, LevelsFactory, check
 import random
-
-from cell import Cell
-import cellstates 
 import nuclearlevel 
 
 def allBombed(self, player):
@@ -16,9 +13,6 @@ class Level(AbstractLevel):
     def units(self):
         return ["bomb_unit"] + ["default_unit" for i in range(self.fieldSize())]
 
-    def cells(self):
-        return [Cell() for i in range(self.fieldSize() ** 2)]
-
     @check(allBombed)
     def isGameOver(self, player):
         return False
@@ -29,9 +23,15 @@ class Level(AbstractLevel):
     def name(self):
         return "bomblevel"
 
-    def onBombed(self, player, unit, enemy):
+    def onBombed(self, player, cell, enemy):
+        unit = cell.decorators["unit_type"]
         if unit == 'bomb_unit':
-            ship = random.choice(enemy.ships)
-            ship.pushOn()
+            x = cell.x 
+            y = cell.y 
+            n = self.fieldSize()
+            koords = map(lambda i, j: (x + i, y + j), [0, 0, -1, 1], [-1, 1, 0, 0])
+            koords = filter(lambda(x, y): 0 <= x < n and 0 <= y < n, koords)# remove unbounded
+            cells = filter(lambda cell: (cell.x, cell.y) in koords, player.cells)
+            [cell.pushOn() for cell in cells]
 
 LevelsFactory.levels["bomblevel"] = Level()

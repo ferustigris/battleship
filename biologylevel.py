@@ -1,9 +1,5 @@
 from levels import AbstractLevel, LevelsFactory, check
-import biologylevel 
-
-def bombBombed(self, player):
-    """ Check, is bomb was bombed """
-    return "nuclear_bomb_unit" in player.units
+import random
 
 def allBombed(self, player):
     """ Check, is all players units are bombed """
@@ -14,17 +10,22 @@ class Level(AbstractLevel):
         return 5 
 
     def units(self):
-        return ["nuclear_bomb_unit"] + ["default_unit" for i in range(self.fieldSize())]
+        return ["biology_bomb_unit"] + ["default_unit" for i in range(self.fieldSize())]
 
     @check(allBombed)
-    @check(bombBombed)
     def isGameOver(self, player):
         return False
 
     def nextLevel(self):
-        return "biologylevel"
+        return "default"
 
     def name(self):
-        return "nuclearlevel"
+        return "biologylevel"
  
-LevelsFactory.levels["nuclearlevel"] = Level()
+    def onBombed(self, player, cell, enemy):
+        unit = cell.decorators["unit_type"]
+        if unit == 'biology_bomb_unit':
+            ship = random.choice(enemy.ships)
+            ship.pushOn()
+
+LevelsFactory.levels["biologylevel"] = Level()
