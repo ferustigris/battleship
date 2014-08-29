@@ -7,7 +7,10 @@ class AbstractStateObserver:
         pass
 
 class Cell:
-    def __init__(self):
+    x = 0
+    y = 0
+    def __init__(self, x, y):
+        self.x, self.y = x, y
         self.__state = cellstates.defaultState
         self.__hidden = False
         self.stateObservers = []

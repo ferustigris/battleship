@@ -62,9 +62,9 @@ class Game:
         self.observer.onFieldSizeChanged(level.fieldSize())
         self.save()
 
-    def onBombed(self, player, unit):
+    def onBombed(self, player, cell):
         enemy = self.players[0] if player == self.players[1] else self.players[1]
-        self.lvl.onBombed(player, unit, enemy)
+        self.lvl.onBombed(player, cell, enemy)
 
     def save(self):
         """ Save game params into storage """
