@@ -2,11 +2,14 @@ from kivy.uix.label import Label
 from kivy.uix.widget import Widget
 from kivy.properties import StringProperty
 from kivy.properties import NumericProperty
+from kivy.properties import BooleanProperty
 from kivy.clock import Clock 
 from cellwidget import CellWidget
+from mplayer import mplayer, turnSoundOn 
 
 class FieldWidget(Widget):
     """Main widget"""
+    sound = BooleanProperty(True)
     text = StringProperty("")
     score = NumericProperty(0)
     defaultUnits = NumericProperty(0)
@@ -63,3 +66,6 @@ class FieldWidget(Widget):
     def onScoreChanged(self, score):
         self.score = score
         #self.showMessage(str(bonus), 1) # TODO: make clouds with added bonuses
+
+    def turnSoundOn(self):
+        self.sound = not self.sound

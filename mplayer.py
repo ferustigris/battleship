@@ -15,6 +15,28 @@ class CB:
         self.sound.play()
         Clock.schedule_once(self, self.t())
 
+class Silence:
+    def playMusic(self):
+        pass
+
+    def stopMusic(self):
+        pass
+
+    def gameOver(self):
+        pass
+
+    def levelUp(self):
+        pass
+
+    def startGame(self):
+        pass
+
+    def destroyUnit(self, unit):
+        pass
+
+    def setUnit(self, unit):
+        pass
+
 class MPlayer:
     __start = SoundLoader.load('sounds/alarm.wav')
     __gameOver = SoundLoader.load('sounds/tube.wav')
@@ -58,3 +80,4 @@ class MPlayer:
         self.__button.play()
 
 mplayer = MPlayer()
+
