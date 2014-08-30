@@ -32,7 +32,7 @@ class GameStatesObserver:
 
     def onGamePrepare(self, game):
         self.RootWidget.rootLayout.clear_widgets()
-        self.current = FieldWidget()
+        self.current = FieldWidget(game)
 
         self.current.onUnitsCountChange(self.units)
         self.units = []

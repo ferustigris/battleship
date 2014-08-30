@@ -4,8 +4,8 @@ from kivy.properties import StringProperty
 from kivy.properties import NumericProperty
 from kivy.properties import BooleanProperty
 from kivy.clock import Clock 
+import weakref 
 from cellwidget import CellWidget
-from mplayer import mplayer, turnSoundOn 
 
 class FieldWidget(Widget):
     """Main widget"""
@@ -27,8 +27,10 @@ class FieldWidget(Widget):
         def __call__(self, *args, **kwargs):
             self.widget.text = ""
  
-    def __init__(self, **kwargs):
+    def __init__(self, game, **kwargs):
         super(FieldWidget, self).__init__(**kwargs)
+        self.game = weakref.proxy(game)
+        self.sound = game.sound
 
     def onGameStart(self, game):
         self.showMessage("start", 1)
@@ -67,5 +69,7 @@ class FieldWidget(Widget):
         self.score = score
         #self.showMessage(str(bonus), 1) # TODO: make clouds with added bonuses
 
-    def turnSoundOn(self):
-        self.sound = not self.sound
+    def turnSoundOn(self, on):
+        self.sound = on
+        self.game.onSound(self.sound)
+

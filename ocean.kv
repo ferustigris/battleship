@@ -60,7 +60,7 @@
                 text: ""
                 background_normal: "images/soundon.png" if root.sound else "images/soundoff.png"
                 background_down: "images/soundon.png" if root.sound else "images/soundoff.png"
-                on_press: root.turnSoundOn()
+                on_press: root.turnSoundOn(not root.sound)
             AsyncImage:
                 source: "images/empty.png"
             Button:
