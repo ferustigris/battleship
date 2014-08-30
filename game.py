@@ -36,6 +36,10 @@ class Game:
         
         self.players = [Player(lvl.units(), self), AI(lvl.units(), self)]
         self.fields = [PlayerField(player, n) for player in self.players]
+        self.human = weakref.proxy(self.players[0])
+        self.ai = weakref.proxy(self.players[1])
+        self.humanField = weakref.proxy(self.fields[0])
+        self.aiField = weakref.proxy(self.fields[1])
 
     def pushOn(self, cell, field):
         self.state.pushOn(self, cell, field)
@@ -45,12 +49,16 @@ class Game:
         self.state.update(self)
 
     def isGameOver(self):
-        return self.lvl.isGameOver(self.players[0])
+        return self.lvl.isGameOver(self.human)
 
     def isLevelUp(self):
-        return self.lvl.isGameOver(self.players[1])
+        return self.lvl.isGameOver(self.ai)
 
     def isReadyToPlay(self):
+        if self.human.isReadyToPlay():
+            self.humanField.deactivate()
+            self.aiField.activate()
+
         return reduce(lambda r, player: r and player.isReadyToPlay(), self.players, True)
 
     def onUnitsCountChange(self, units):

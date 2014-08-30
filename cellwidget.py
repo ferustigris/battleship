@@ -25,9 +25,9 @@ class CellWidget(Button):
         super(CellWidget, self).__init__(**kwargs)
         self.cell = cell
         self.field = field
-        self.cell.stateObservers.append(weakref.proxy(self))
-        self.cell.activeObservers.append(weakref.proxy(self))
         self.game = game
+        self.cell.stateObservers.append(weakref.proxy(self))
+        self.cell.addActivateObserver(weakref.proxy(self))
         self.bind(on_press = self.onPress)
 
     def onPress(self, e):
@@ -46,7 +46,7 @@ class CellWidget(Button):
         self.background_down = self.images[state]
 
     def onDeactivated(self):
-        if self.cell.state == "default":
+        if self.cell.state == "default" or self.cell.state == 'empty':
             self.background_normal = self.images['hidden']
             self.background_down = self.images['hidden']
 

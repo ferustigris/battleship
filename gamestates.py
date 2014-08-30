@@ -31,6 +31,7 @@ class PlayGameState(AbstractGameState):
             game.state = GameLevelUp()
             game.observer.onLevelUp(game)
             mplayer.stopMusic() 
+        return True
 
 class GameOverState(AbstractGameState):
     def __init__(self):

@@ -9,7 +9,7 @@ class AbstractPlayer:
         pass 
 
     @abstractmethod
-    def arrange(self, cells):
+    def arrange(self, cells, field):
         pass 
     
     @abstractmethod
@@ -52,8 +52,9 @@ class Player(AbstractPlayer):
     def update(self, enemy):
         pass 
 
-    def arrange(self, cells):
+    def arrange(self, cells, field):
         self.game.onUnitsCountChange(self.units)
+        field.activate()
 
     @CheckLastSteps
     def pushOn(self, game, cell):
@@ -98,8 +99,9 @@ class AI(Player):
         x = random.choice(steps)
         self.lastSteps.append(x)
         enemyCells[x].pushOn()
+        return True
 
-    def arrange(self, cells):
+    def arrange(self, cells, field):
         for cell in cells:
             cell.hide()
 
@@ -108,6 +110,7 @@ class AI(Player):
             rInd = random.choice(indexes)
             indexes.remove(rInd)
             self.setUnit(cells[rInd])
+        field.deactivate()
 
     @CheckLastSteps
     def pushOn(self, game, cell):
