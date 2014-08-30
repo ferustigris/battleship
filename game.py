@@ -31,17 +31,17 @@ class Game:
 
     def initPlayers(self):
         lvl = self.lvl
+
+        n = lvl.fieldSize()
         
-        self.players = [Player(lvl.units(), self, lvl.cells()), AI(lvl.units(), self, lvl.cells())]
-        self.fields = [PlayerField(player) for player in self.players]
+        self.players = [Player(lvl.units(), self), AI(lvl.units(), self)]
+        self.fields = [PlayerField(player, n) for player in self.players]
 
     def pushOn(self, cell, field):
         self.state.pushOn(self, cell, field)
 
     def update(self):
-        for player in self.players:
-            for alien in filter(lambda r: not (r == player), self.players):
-                player.update(alien)
+        [self.fields[i].update(self.fields[j]) for i ,j in map(None, [0, 1], [1, 0])]
         self.state.update(self)
 
     def isGameOver(self):

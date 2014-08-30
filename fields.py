@@ -1,22 +1,26 @@
-
-import weakref
+from cell import Cell
 
 class PlayerField(object):
-    def __init__(self, player):
-        player.field = weakref.proxy(self)
+    active = True
+    def __init__(self, player, n):
         self.player = player
-        self.cells = player.cells
+        self.cells = [Cell(i % n, i/n) for i in range(n ** 2)]
+        player.cells = self.cells # is used by levels 
         
-        for cell in self.player.cells:
+        for cell in self.cells:
             cell.stateObservers.append(player)
-        player.arrange()
+        player.arrange(self.cells)
 
     def pushOn(self, game, cell):
-        if cell in self.player.cells:
+        if self.active:
             self.player.pushOn(game, cell)
+            self.active = False
 
     def setUnit(self, cell):
-        if cell in self.player.cells:
-            self.player.setUnitManual(cell)
+        self.player.setUnitManual(0, cell)
+
+    def update(self, enemy):
+        self.player.update(enemy.cells)
+        self.active = True
 
 
