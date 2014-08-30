@@ -14,7 +14,16 @@ class Cell:
         self.__state = cellstates.defaultState
         self.__hidden = False
         self.stateObservers = []
+        self.activeObservers = []
         self.decorators = {}
+
+    def deactivate(self):
+        for observer in self.activeObservers:
+            observer.onDeactivated()
+
+    def activate(self):
+        for observer in self.activeObservers:
+            observer.onActivated()
 
     def hide(self):
         """ State will be shown as default"""
@@ -35,7 +44,7 @@ class Cell:
     def state(self):
         """Return name of current state"""
         if self.__hidden:
-            return "hidden"
+            return "default"
         return self.__state.name
 
     def setState(self, newState):

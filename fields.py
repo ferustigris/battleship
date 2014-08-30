@@ -15,6 +15,8 @@ class PlayerField(object):
         if self.active:
             if self.player.pushOn(game, cell):
                 self.active = False
+                for cell in self.cells:
+                    cell.deactivate()
 
     def setUnit(self, cell):
         self.player.setUnitManual(0, cell)
@@ -22,3 +24,5 @@ class PlayerField(object):
     def update(self, enemy):
         self.player.update(enemy.cells)
         self.active = True
+        for cell in self.cells:
+            cell.activate()
