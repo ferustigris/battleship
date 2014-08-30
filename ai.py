@@ -38,7 +38,7 @@ def CheckLastSteps(func):
 
     def __CheckLastSteps(self, game, cell):
         if cell in steps:
-            return None
+            return False
         steps.append(cell)
         return func(self, game, cell)
     return __CheckLastSteps
@@ -57,7 +57,7 @@ class Player(AbstractPlayer):
 
     @CheckLastSteps
     def pushOn(self, game, cell):
-        pass
+        return False
 
     def onCellStateChanged(self, cell, state):
         if state == "X":
@@ -113,6 +113,7 @@ class AI(Player):
     def pushOn(self, game, cell):
         cell.pushOn()
         Clock.schedule_once(lambda x: game.update(), 1)
+        return True
 
     def setUnitManual(self, _, cell):
         pass 

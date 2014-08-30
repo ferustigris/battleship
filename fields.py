@@ -13,8 +13,8 @@ class PlayerField(object):
 
     def pushOn(self, game, cell):
         if self.active:
-            self.player.pushOn(game, cell)
-            self.active = False
+            if self.player.pushOn(game, cell):
+                self.active = False
 
     def setUnit(self, cell):
         self.player.setUnitManual(0, cell)
@@ -22,5 +22,3 @@ class PlayerField(object):
     def update(self, enemy):
         self.player.update(enemy.cells)
         self.active = True
-
-

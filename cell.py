@@ -35,7 +35,7 @@ class Cell:
     def state(self):
         """Return name of current state"""
         if self.__hidden:
-            return "default"
+            return "hidden"
         return self.__state.name
 
     def setState(self, newState):

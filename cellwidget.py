@@ -8,6 +8,19 @@ import weakref
 
 class CellWidget(Button):
     """One cell widget"""
+    images = {
+            "empty": "images/empty_cell.png",
+            "unit": "images/unit.png",
+            "checked": "images/checked_cell.png",
+            "hidden": "images/unit.png",
+            "X": "images/bad_cell.png",
+            "default": "images/cell.png",
+
+            "default_unit": "images/ship.png",
+            "bomb_unit": "images/bomb.png",
+            "nuclear_bomb_unit": "images/nuclear_bomb.png",
+            "biology_bomb_unit": "images/biology_bomb.png",
+            }
     def __init__(self, game, cell, field, **kwargs):
         super(CellWidget, self).__init__(**kwargs)
         self.cell = cell
@@ -20,22 +33,14 @@ class CellWidget(Button):
         self.game.pushOn(self.cell, self.field)
 
     def onCellStateChanged(self, cell, state):
-        images = {
-            "empty": "images/empty_cell.png",
-            "unit": "images/unit.png",
-            "checked": "images/checked_cell.png",
-            "X": "images/bad_cell.png",
-            "default": "images/cell.png",
+        self.redraw()
 
-            "default_unit": "images/ship.png",
-            "bomb_unit": "images/bomb.png",
-            "nuclear_bomb_unit": "images/nuclear_bomb.png",
-            "biology_bomb_unit": "images/biology_bomb.png",
-            }
-
-        if state != "default":
+    def redraw(self):
+        state = self.cell.state
+        if state != "default" and state != "hidden":
             with self.canvas.before:
-                for type, decorator in cell.decorators.items():
-                    Rectangle(source=images[decorator], pos=self.pos, size=self.size)
+                for type, decorator in self.cell.decorators.items():
+                    Rectangle(source=self.images[decorator], pos=self.pos, size=self.size)
+        self.background_normal = self.images[state]
+        self.background_down = self.images[state]
 
-        self.background_normal = images[state]
