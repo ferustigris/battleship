@@ -34,18 +34,17 @@ class Game:
 
         n = lvl.fieldSize()
         
-        self.players = [Player(lvl.units(), self), AI(lvl.units(), self)]
-        self.fields = [PlayerField(player, n) for player in self.players]
-        self.human = weakref.proxy(self.players[0])
-        self.ai = weakref.proxy(self.players[1])
-        self.humanField = weakref.proxy(self.fields[0])
-        self.aiField = weakref.proxy(self.fields[1])
+        self.human = Player(lvl.units(), self)
+        self.ai = AI(lvl.units(), self)
+        self.humanField = PlayerField(self.human, n)
+        self.aiField = PlayerField(self.ai, n)
 
     def pushOn(self, cell, field):
         self.state.pushOn(self, cell, field)
 
     def update(self):
-        [self.fields[i].update(self.fields[j]) for i ,j in map(None, [0, 1], [1, 0])]
+        self.humanField.update(self.aiField)
+        self.aiField.update(self.humanField)
         self.state.update(self)
 
     def isGameOver(self):
@@ -58,8 +57,8 @@ class Game:
         if self.human.isReadyToPlay():
             self.humanField.deactivate()
             self.aiField.activate()
-
-        return reduce(lambda r, player: r and player.isReadyToPlay(), self.players, True)
+            return True
+        return False 
 
     def onUnitsCountChange(self, units):
         self.observer.onUnitsCountChange(units)
@@ -75,13 +74,16 @@ class Game:
         self.save()
 
     def onBombed(self, player, cell):
-        enemy = self.players[0] if player == self.players[1] else self.players[1]
+        enemy = self.human if player == self.ai else self.ai
         self.lvl.onBombed(player, cell, enemy)
     
     def onSound(self, on):
         self.sound = on
         mplayer.turnSoundOn(self.sound)
         self.save()
+
+    def fields(self):
+        return [self.humanField, self.aiField]
 
     def save(self):
         """ Save game params into storage """
