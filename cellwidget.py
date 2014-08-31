@@ -12,7 +12,7 @@ class CellWidget(Button):
             "empty": "images/empty_cell.png",
             "unit": "images/unit.png",
             "checked": "images/checked_cell.png",
-            "hidden": "images/deactivated.png",
+            "deactivated": "images/deactivated_cell.png",
             "X": "images/bad_cell.png",
             "default": "images/empty_cell.png",
 
@@ -47,8 +47,8 @@ class CellWidget(Button):
 
     def onDeactivated(self):
         if self.cell.state == "default" or self.cell.state == 'empty':
-            self.background_normal = self.images['hidden']
-            self.background_down = self.images['hidden']
+            self.background_normal = self.images['deactivated']
+            self.background_down = self.images['deactivated']
 
     def onActivated(self):
         self.redraw()
