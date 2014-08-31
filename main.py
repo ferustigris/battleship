@@ -20,6 +20,7 @@ class GameStatesObserver:
     def __init__(self, RootWidget):
         self.RootWidget = RootWidget
         self.units = []
+        self.__fieldSize = 5
 
     def onGameStart(self, game):
         self.current.onGameStart(game)
@@ -34,6 +35,7 @@ class GameStatesObserver:
         self.RootWidget.rootLayout.clear_widgets()
         self.current = FieldWidget(game)
 
+        self.current.onFieldSizeChanged(self.__fieldSize)
         self.current.onUnitsCountChange(self.units)
         self.units = []
 
@@ -51,6 +53,7 @@ class GameStatesObserver:
 
     def onFieldSizeChanged(self, size):
         self.current.onFieldSizeChanged(size)
+        self.__fieldSize = size
 
     def onScoreChanged(self, bonus):
         self.current.onScoreChanged(bonus)

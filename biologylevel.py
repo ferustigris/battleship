@@ -17,7 +17,7 @@ class Level(AbstractLevel):
         return False
 
     def nextLevel(self):
-        return "default"
+        return "extrabomblevel_1_0_4"
 
     def name(self):
         return "biologylevel"
@@ -29,3 +29,4 @@ class Level(AbstractLevel):
             ship.pushOn()
 
 LevelsFactory.levels["biologylevel"] = Level()
+import extrabomblevel 

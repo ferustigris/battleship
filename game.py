@@ -33,6 +33,7 @@ class Game:
         lvl = self.lvl
 
         n = lvl.fieldSize()
+        self.observer.onFieldSizeChanged(n)
         
         self.human = Player(lvl.units(), self)
         self.ai = AI(lvl.units(), self)
@@ -70,7 +71,6 @@ class Game:
 
     def onLevelUp(self, level):
         self.lvl = level
-        self.observer.onFieldSizeChanged(level.fieldSize())
         self.save()
 
     def onBombed(self, player, cell):

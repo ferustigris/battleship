@@ -13,7 +13,6 @@ class CB:
     def __call__(self, *args, **kwargs):
         if self.term:
             return
-        self.sound.volume = 0
         self.sound.play()
         Clock.schedule_once(self, self.t())
 
