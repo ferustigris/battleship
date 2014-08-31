@@ -43,7 +43,7 @@ class FieldWidget(Widget):
 
     def onGamePrepare(self, game):
         self.score = game.score
-        for field, fieldWidget in zip(self.fields, game.fields):
+        for field, fieldWidget in zip(self.fields, game.fields()):
             field.clear_widgets()
             for cell in fieldWidget.cells:
                 field.add_widget(CellWidget(game, cell, fieldWidget))

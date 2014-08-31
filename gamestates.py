@@ -12,23 +12,11 @@ class AbstractGameState:
     def update(self, game):
         pass
 
-def CheckLastSteps(func):
-    '''Check has step been made'''
-    steps = []
-
-    def __CheckLastSteps(self, game, cell, field):
-        if cell in steps:
-            return None
-        steps.append(cell)
-        return func(self, game, cell, field)
-    return __CheckLastSteps
-    
 class PlayGameState(AbstractGameState):
     def __init__(self):
         mplayer.startGame()
         mplayer.playMusic()
 
-    @CheckLastSteps
     def pushOn(self, game, cell, field):
         field.pushOn(game, cell)
 
@@ -77,7 +65,6 @@ class InitGameState(AbstractGameState):
        game.observer.onGamePrepare(game) 
 
 class PrepareGameState(AbstractGameState):
-    @CheckLastSteps
     def pushOn(self, game, cell, field):
         field.setUnit(cell)
 

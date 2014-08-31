@@ -1,14 +1,15 @@
 import random
 from abc import abstractmethod
 from mplayer import mplayer 
+from kivy.clock import Clock 
 
 class AbstractPlayer:
     @abstractmethod
-    def update(self, alienField):
+    def update(self, enemyCells):
         pass 
 
     @abstractmethod
-    def arrange(self):
+    def arrange(self, cells, field):
         pass 
     
     @abstractmethod
@@ -28,24 +29,36 @@ class AbstractPlayer:
         pass
 
     @abstractmethod
-    def setUnitManual(self, cell):
+    def setUnitManual(self, _, cell):
         pass 
 
+def CheckLastSteps(func):
+    '''Check has step been made'''
+    steps = []
+
+    def __CheckLastSteps(self, game, cell):
+        if cell in steps:
+            return False
+        steps.append(cell)
+        return func(self, game, cell)
+    return __CheckLastSteps
+    
 class Player(AbstractPlayer):
-    def __init__(self, units, game, cells):
-        self.cells = cells 
+    def __init__(self, units, game):
         self.units = units 
         self.game = game
         self.ships = []
 
-    def update(self, alien):
+    def update(self, enemy):
         pass 
 
-    def arrange(self):
+    def arrange(self, cells, field):
         self.game.onUnitsCountChange(self.units)
+        field.activate()
 
+    @CheckLastSteps
     def pushOn(self, game, cell):
-        pass
+        return False
 
     def onCellStateChanged(self, cell, state):
         if state == "X":
@@ -70,7 +83,8 @@ class Player(AbstractPlayer):
         if unit == 'default_unit':
             self.ships.append(cell)
 
-    def setUnitManual(self, cell):
+    @CheckLastSteps
+    def setUnitManual(self, _, cell):
         self.setUnit(cell)
         self.game.onUnitsCountChange(self.units)
 
@@ -79,28 +93,32 @@ class AI(Player):
         Player.__init__(self, *args)
         self.lastSteps = []
         
-    def update(self, alien):
-        allPossibleSteps = range(len(alien.cells))
+    def update(self, enemyCells):
+        allPossibleSteps = range(len(enemyCells))
         steps = list(set(allPossibleSteps).difference(self.lastSteps))
         x = random.choice(steps)
         self.lastSteps.append(x)
-        alien.cells[x].pushOn()
+        enemyCells[x].pushOn()
+        return True
 
-    def arrange(self):
-        for cell in self.cells:
+    def arrange(self, cells, field):
+        for cell in cells:
             cell.hide()
 
-        indexes = range(len(self.cells))
+        indexes = range(len(cells))
         while self.units:
             rInd = random.choice(indexes)
             indexes.remove(rInd)
-            self.setUnit(self.cells[rInd])
+            self.setUnit(cells[rInd])
+        field.deactivate()
 
+    @CheckLastSteps
     def pushOn(self, game, cell):
         cell.pushOn()
-        game.update()
+        Clock.schedule_once(lambda x: game.update(), 1)
+        return True
 
-    def setUnitManual(self, cell):
+    def setUnitManual(self, _, cell):
         pass 
 
     def onBombed(self, cell):

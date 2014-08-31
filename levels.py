@@ -1,5 +1,4 @@
 from abc import abstractmethod
-from cell import Cell
 
 class AbstractLevel:
     @abstractmethod
@@ -9,10 +8,6 @@ class AbstractLevel:
     @abstractmethod
     def units(self):
         pass 
-
-    def cells(self):
-        n = self.fieldSize()
-        return [Cell(i % n, i/n) for i in range(n ** 2)]
 
     @abstractmethod
     def isGameOver(self, players):

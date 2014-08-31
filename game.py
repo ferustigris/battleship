@@ -31,27 +31,34 @@ class Game:
 
     def initPlayers(self):
         lvl = self.lvl
+
+        n = lvl.fieldSize()
         
-        self.players = [Player(lvl.units(), self, lvl.cells()), AI(lvl.units(), self, lvl.cells())]
-        self.fields = [PlayerField(player) for player in self.players]
+        self.human = Player(lvl.units(), self)
+        self.ai = AI(lvl.units(), self)
+        self.humanField = PlayerField(self.human, n)
+        self.aiField = PlayerField(self.ai, n)
 
     def pushOn(self, cell, field):
         self.state.pushOn(self, cell, field)
 
     def update(self):
-        for player in self.players:
-            for alien in filter(lambda r: not (r == player), self.players):
-                player.update(alien)
+        self.humanField.update(self.aiField)
+        self.aiField.update(self.humanField)
         self.state.update(self)
 
     def isGameOver(self):
-        return self.lvl.isGameOver(self.players[0])
+        return self.lvl.isGameOver(self.human)
 
     def isLevelUp(self):
-        return self.lvl.isGameOver(self.players[1])
+        return self.lvl.isGameOver(self.ai)
 
     def isReadyToPlay(self):
-        return reduce(lambda r, player: r and player.isReadyToPlay(), self.players, True)
+        if self.human.isReadyToPlay():
+            self.humanField.deactivate()
+            self.aiField.activate()
+            return True
+        return False 
 
     def onUnitsCountChange(self, units):
         self.observer.onUnitsCountChange(units)
@@ -67,13 +74,16 @@ class Game:
         self.save()
 
     def onBombed(self, player, cell):
-        enemy = self.players[0] if player == self.players[1] else self.players[1]
+        enemy = self.human if player == self.ai else self.ai
         self.lvl.onBombed(player, cell, enemy)
     
     def onSound(self, on):
         self.sound = on
         mplayer.turnSoundOn(self.sound)
         self.save()
+
+    def fields(self):
+        return [self.humanField, self.aiField]
 
     def save(self):
         """ Save game params into storage """
