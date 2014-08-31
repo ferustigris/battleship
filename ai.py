@@ -69,6 +69,8 @@ class Player(AbstractPlayer):
             self.game.onBombed(self, cell)
             self.onBombed(cell)
             mplayer.destroyUnit(unit)
+        else:
+            mplayer.destroyUnit('empty')
 
     def onBombed(self, cell):
         self.game.onUnitsCountChange(self.units)

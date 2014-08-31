@@ -13,7 +13,7 @@ class CB:
     def __call__(self, *args, **kwargs):
         if self.term:
             return
-        self.sound.volume = 0.3
+        self.sound.volume = 0
         self.sound.play()
         Clock.schedule_once(self, self.t())
 
@@ -42,6 +42,7 @@ class MPlayer:
         self.__bombs['bomb_unit'] = SoundDecorator(SoundLoader.load('sounds/shut.wav'), self)
         self.__bombs['nuclear_bomb_unit'] = SoundDecorator(SoundLoader.load('sounds/bomb3.wav'), self)
         self.__bombs['biology_bomb_unit'] = SoundDecorator(SoundLoader.load('sounds/sirena.wav'), self)
+        self.__bombs['empty'] = SoundDecorator(SoundLoader.load('sounds/drip.wav'), self)
 
     def playMusic(self):
         self.__backgroundSounds.append(CB(self.__sonar, lambda : 5))
