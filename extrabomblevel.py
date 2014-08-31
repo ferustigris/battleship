@@ -11,7 +11,6 @@ class Level(AbstractLevel):
         self.size = size
         lvls = LevelsFactory()
         self.__bombLevel = lvls.create('bomblevel')
-        self.__bombLevel.fieldSize = lambda : size
         self.__biologyLevel = lvls.create('biologylevel')
 
     def fieldSize(self):

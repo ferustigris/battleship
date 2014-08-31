@@ -1,5 +1,4 @@
 from levels import AbstractLevel, LevelsFactory, check
-import biologylevel 
 
 def bombBombed(self, player):
     """ Check, is bomb was bombed """
@@ -28,3 +27,4 @@ class Level(AbstractLevel):
         return "nuclearlevel"
  
 LevelsFactory.levels["nuclearlevel"] = Level()
+import biologylevel 
