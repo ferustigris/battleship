@@ -7,7 +7,7 @@ title = Battleship
 package.name = battleship 
 
 # (str) Package domain (needed for android/ios packaging)
-package.domain = org.test
+package.domain = com.ferus.tigris 
 
 # (str) Source code where the main.py live
 source.dir = .
@@ -29,7 +29,7 @@ source.include_exts = py,png,jpg,kv,atlas,wav
 # version.filename = %(source.dir)s/main.py
 
 # (str) Application versioning (method 2)
-version = 1.0.1
+version = 1.0.2
 
 # (list) Application requirements
 requirements = kivy
@@ -55,7 +55,7 @@ fullscreen = 1
 #
 
 # (list) Permissions
-#android.permissions = INTERNET
+android.permissions = INTERNET,WAKE_LOCK
 
 # (int) Android API to use
 #android.api = 14
@@ -119,7 +119,7 @@ fullscreen = 1
 
 # (bool) Indicate whether the screen should stay on
 # Don't forget to add the WAKE_LOCK permission if you set this to True
-#android.wakelock = False
+android.wakelock = True
 
 # (list) Android application meta-data to set (key=value format)
 #android.meta_data =
