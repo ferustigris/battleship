@@ -35,7 +35,7 @@ class Level(AbstractLevel):
 
     def onBombed(self, player, cell, enemy):
         self.__biologyLevel.onBombed(player, cell, enemy)
-        self.__bombLevel.onBombedSized(player, cell, enemy, self.size)
+        self.__bombLevel.onBombed(player, cell, enemy)
 
 for i,j,c in map(None , range(1, 6), range(0, 5), range(4, 9)):
     lvl = Level(i, j, c)

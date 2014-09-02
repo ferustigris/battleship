@@ -13,23 +13,23 @@ class Cell:
         self.x, self.y = x, y
         self.__state = cellstates.defaultState
         self.__hidden = False
-        self.__deactivated = False
+        self.deactivated = False
         self.stateObservers = []
         self.activeObservers = []
         self.decorators = {}
 
     def deactivate(self):
-        self.__deactivated = True 
+        self.deactivated = True 
         for observer in self.activeObservers:
             observer.onDeactivated()
 
     def activate(self):
-        self.__deactivated = False
+        self.deactivated = False
         for observer in self.activeObservers:
             observer.onActivated()
 
     def addActivateObserver(self, observer):
-        if self.__deactivated:
+        if self.deactivated:
             observer.onDeactivated()
         self.activeObservers.append(observer)
 

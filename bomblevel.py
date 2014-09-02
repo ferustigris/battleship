@@ -23,14 +23,9 @@ class Level(AbstractLevel):
         return "bomblevel"
 
     def onBombed(self, player, cell, enemy):
-        self.onBombedSized(player, cell, enemy, self.fieldSize())
-
-    def onBombedSized(self, player, cell, enemy, n):
         unit = cell.decorators["unit_type"]
         if unit == 'bomb_unit':
-            x = cell.x 
-            y = cell.y 
-            koords = map(lambda i, j: (x + i, y + j), [0, 0, -1, 1], [-1, 1, 0, 0])
+            koords = player.getNealestKoords(cell.x, cell.y)
             cells = filter(lambda cell: (cell.x, cell.y) in koords, player.cells)
             [cell.pushOn() for cell in cells]
 

@@ -16,11 +16,11 @@ class PlayerField(object):
                 self.deactivate()
 
     def setUnit(self, cell):
-        self.player.setUnitManual(self, cell)
-        x, y = cell.x, cell.y
-        koords = map(lambda i, j: (x + i, y + j), [0, 0, -1, 1], [-1, 1, 0, 0])
-        cells = filter(lambda cell: (cell.x, cell.y) in koords, self.cells)
-        [cell.deactivate() for cell in cells]
+        if not cell.deactivated:
+            self.player.setUnitManual(self, cell)
+            koords = self.player.getNealestKoords(cell.x, cell.y)
+            cells = filter(lambda cell: (cell.x, cell.y) in koords, self.cells)
+            [cell.deactivate() for cell in cells]
 
     def update(self, enemy):
         self.update = self.gameUpdate

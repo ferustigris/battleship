@@ -90,6 +90,9 @@ class Player(AbstractPlayer):
         self.setUnit(cell)
         self.game.onUnitsCountChange(self.units)
 
+    def getNealestKoords(self, x, y):
+        return map(lambda i, j: (x + i, y + j), [0, 0, -1, 1], [-1, 1, 0, 0])
+
 class AI(Player):
     def __init__(self, *args):
         Player.__init__(self, *args)
@@ -111,6 +114,9 @@ class AI(Player):
         while self.units:
             rInd = random.choice(indexes)
             indexes.remove(rInd)
+            koords = self.getNealestKoords(cells[rInd].x, cells[rInd].y)
+            indexesToRemove = [i for i in indexes if (cells[i].x, cells[i].y) in koords]
+            indexes = [x for x in set(indexes).difference(indexesToRemove)]
             self.setUnit(cells[rInd])
         field.deactivate()
 
