@@ -17,6 +17,10 @@ class PlayerField(object):
 
     def setUnit(self, cell):
         self.player.setUnitManual(self, cell)
+        x, y = cell.x, cell.y
+        koords = map(lambda i, j: (x + i, y + j), [0, 0, -1, 1], [-1, 1, 0, 0])
+        cells = filter(lambda cell: (cell.x, cell.y) in koords, self.cells)
+        [cell.deactivate() for cell in cells]
 
     def update(self, enemy):
         self.update = self.gameUpdate
@@ -28,10 +32,8 @@ class PlayerField(object):
     
     def activate(self):
         self.active = True
-        for cell in self.cells:
-            cell.activate()
+        [cell.activate() for cell in self.cells]
 
     def deactivate(self):
         self.active = False
-        for cell in self.cells:
-            cell.deactivate()
+        [cell.deactivate() for cell in self.cells]
