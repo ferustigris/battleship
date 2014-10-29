@@ -10,8 +10,8 @@ Build application in release mode:
 
 Add your digest:
 
-    $ jarsigner -keystore ~/Dropbox/gplay_code bin/Battleship-0.0.2-release-unsigned.apk ferus.tigris
+    $ jarsigner -keystore <gplay_code file> bin/Battleship-<version>-release-unsigned.apk <Your name>
 
 And optimaze it:
 
-    $ zipalign 4 bin/Battleship-0.0.2-release-unsigned.apk  bin/Battleship-0.0.2-release.apk
+    $ zipalign 4 bin/Battleship-<version>-release-unsigned.apk  bin/Battleship-<version>.apk
