@@ -15,7 +15,6 @@ class AbstractCellState(object):
         """ Return state name"""
         pass
 
-   
 class BombedCellState(AbstractCellState):
     """Unit has been bombed already"""
     def transfer(self, cell):
@@ -25,15 +24,37 @@ class BombedCellState(AbstractCellState):
     def name(self):
         return "X"
 
+from kivy.clock import Clock 
+
 class EmptyCellState(AbstractCellState):
     """Just empty"""
     def transfer(self, cell):
         cell.unhide()
-        return CheckedEmptyCellState()
+        return LazyCellState(CheckedEmptyCellState(), cell)
 
     @property
     def name(self):
-        return "empty"
+        return "empty" 
+
+class LazyCellState(EmptyCellState):
+    """Empty cell is checked"""
+    class CB:
+        """ Callback which hide the titles""" 
+        def __init__(self, cell, newState):
+            self.cell = cell 
+            self.newState = newState 
+        def __call__(self, *args, **kwargs):
+            self.cell.setState(self.newState)
+
+    def __init__(self, nextState, cell):
+        Clock.schedule_once(self.CB(cell, nextState), 1)
+
+    def transfer(self, cell):
+        return self
+
+    @property
+    def name(self):
+        return "on_step" 
 
 class CheckedEmptyCellState(EmptyCellState):
     """Empty cell is checked"""
@@ -48,7 +69,7 @@ class UnitCellState(AbstractCellState):
     """Unit are there"""
     def transfer(self, cell):
         cell.unhide()
-        return BombedCellState()
+        return LazyCellState(BombedCellState(), cell)
 
     @property
     def name(self):

@@ -10,6 +10,7 @@ class CellWidget(Button):
     """One cell widget"""
     images = {
             "empty": "images/empty_cell.png",
+            "on_step": "images/onstep.png",
             "unit": "images/unit.png",
             "checked": "images/checked_cell.png",
             "deactivated": "images/deactivated_cell.png",
