@@ -1,4 +1,4 @@
-Battleship is based on kivy framework.
+Battleship is popular 2D game.
 
 Is based on kivy framework: http://kivy.org
 
